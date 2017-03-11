@@ -5,6 +5,8 @@ It is a suite of offline processes (also called CDP programs) for transforming a
 at [unstablesound.net/cdp.html](http://www.unstablesound.net/cdp.html), because I think having a navigable version of it is useful.
 I am not the author of this code. The source code is released under the GNU Lesser General Public License (LGPL) v2.1.
 
+__Note:__ CDP is actually on GitHub now, so I might delete this "fork" and ask to pull my changes: https://github.com/ComposersDesktop/CDP7
+
 The following changes have been made to the source code archive linked to above:
 
 - remove `.DS_Store` OS X desktop files
