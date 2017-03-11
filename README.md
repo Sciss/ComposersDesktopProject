@@ -1,4 +1,4 @@
-# ComposersDesktopProject
+# Composers Desktop Project
 
 The [Composers Desktop Project](http://www.composersdesktop.com/) (CDP) is a software platform produced since the late 1980s by the eponymous organisation.
 It is a suite of offline processes (also called CDP programs) for transforming audio files. This repository is simply a copy I made from the original source code provided
@@ -12,6 +12,7 @@ The following changes have been made to the source code archive linked to above:
 - replace `libaaio/libaaio-0.3.1.tar.bz2` with the extracted library directory `libaaio-0.3.1`
 - add `-fPIC` C-compiler flag to libraries (`dev/cdp2k`, `dev/sfsys`, `dev/externals/portsf`)
 - do not include prebuilt `.a` files
+- fix problem with multiple macro definition of `min` and `max` (collision with STL) in `dev/externals/reverb/tdelaymain.cpp`
 
 ## Building on Linux
 
@@ -52,11 +53,3 @@ I am still having problems compling the following programs, due to portaudio lib
 - paplay
 - pvplay
 - recsf
-
-And the following programs, due to a problem wit tdelaymain and STL macros:
-
-- reverb
-- rmresp
-- rmverb
-- tapdelay
-

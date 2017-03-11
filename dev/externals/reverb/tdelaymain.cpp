@@ -35,6 +35,9 @@
 #include <string.h>
 extern "C" {
 #include <sfsys.h>
+// these are incompatible with STL
+#undef min
+#undef max
 }
 #include <props.h>
 #include "reverberator.h"
