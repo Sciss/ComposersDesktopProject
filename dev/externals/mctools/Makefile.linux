@@ -1,0 +1,82 @@
+#
+#	OSX makefile for CDP Multi-Channel Toolkit, © Richard Dobson Feb 1 2014
+#       see also directory paprogs for recsf and paplay (depend on portaudio)
+#	
+#
+CC=gcc
+CPP=g++
+CDPROOT=../../..
+SFINC=$(CDPROOT)/include
+PSFINC=../include
+PORTSF=../lib
+SFSYS=$(CDPROOT)/lib
+CFLAGS= -O2  -DRELEASE7 -Dunix -Dlinux -I$(PSFINC) -I$(SFINC)  -L$(PORTSF) -L$(SFSYS)
+PROGS= abfpan abfpan2 abfdcode fmdcode channelx chorder chxformat copysfx interlx nmix njoin rmsinfo sfprops
+
+.c.o:
+	$(CC) $(CFLAGS) -c $<
+.cpp.o:
+	$(CPP) $(CFLAGS) -c $<
+#
+#	targets
+#
+	 
+all:	$(PROGS) 
+
+abfdcode:  abfdcode.o
+	$(CPP) $(CFLAGS) abfdcode.o -o abfdcode -lm -lportsf -lstdc++
+
+interlx:	interlx.o
+	$(CC) $(CFLAGS) interlx.o -o interlx -lm -lportsf
+
+channelx:	channel.o
+	$(CC) $(CFLAGS) channel.o -o channelx -lm -lportsf
+
+abfpan:	abfpan.o
+	$(CPP) $(CFLAGS) abfpan.o -o abfpan -lm -lportsf -lstdc++
+
+abfpan2:	abfpan2.o
+	$(CPP) $(CFLAGS) abfpan2.o -o abfpan2 -lm -lportsf -lstdc++
+
+nmix:	nmix.o
+	$(CC) $(CFLAGS) nmix.o -o nmix -lm  -lportsf
+
+copysfx: copysf.o
+	$(CC) $(CFLAGS) copysf.o -o copysfx -lm  -lportsf
+
+sfprops.o:	sfprops.c
+	$(CC)	$(CFLAGS) -c sfprops.c
+
+sfprops:	sfprops.o
+	$(CC) $(CFLAGS)  sfprops.o -o sfprops -lm -lsfsys
+
+njoin:	njoin.o
+	$(CC) $(CFLAGS) njoin.o -o njoin -lm -lportsf
+
+fmdcode:	fmdcode.o fmhfuncs.o
+	$(CC) $(CFLAGS) fmdcode.o fmhfuncs.o  -o fmdcode -lm -lportsf 
+
+chorder:	chorder.o
+	$(CC) $(CFLAGS) chorder.o -o chorder -lm -lportsf
+
+chxformat:	chxformat.o
+	$(CC) $(CFLAGS) chxformat.o -o chxformat -lm -lportsf
+
+rmsinfo:	rmsinfo.o
+	$(CPP) $(CFLAGS) rmsinfo.o -o rmsinfo -lm -lportsf -lstdc++
+
+clean:
+	-rm -f *.o
+
+veryclean:	clean
+	rm  -f $(PROGS) 
+
+install:	$(PROGS)
+	cp $(PROGS) ../../Release
+	
+#
+#	dependencies
+#
+
+fmhdcode.c:	fmdcode.h
+fmhfuncs.c:	fmdcode.h

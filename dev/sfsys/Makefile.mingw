@@ -1,0 +1,40 @@
+#
+#	mingw makefile for sfsys (Release 7)  © Richard Dobson, CDP Ltd 2014
+#
+
+CC=gcc
+# add -DVERBOSE to get diagnostic reports to stdout
+CDPROOT=../..
+
+CFLAGS= -O2 -DCDP97 -DCDP99 -DFILE64_WIN -D_X86_ -DWIN32 -D_WIN32 -D__GNUWIN32__ -DFILE_AMB_SUPPORT -I$(CDPROOT)/include
+HDRS=	$(CDPROOT)/include/sfsys.h  $(CDPROOT)/include/osbind.h ./sffuncs.h ./alias.h
+OBJS=	sfsys.o snd.o sfdir.o osbind.o props.o shortcuts.o scandir.o alias.o
+
+.c.o:
+	$(CC) $(CFLAGS) -c $<
+#
+#	targets
+#
+all:	libsfsys.a
+
+libsfsys.a:	$(OBJS)
+	ar cr libsfsys.a $(OBJS)
+	ranlib libsfsys.a
+
+clean:
+	rm -f $(OBJS)
+
+veryclean:	clean
+	rm  -f libsfsys.a
+
+install:	libsfsys.a 	
+	cp libsfsys.a ../../lib/libsfsys.a
+
+#
+#	dependencies
+#
+sfsys.o:	$(HDRS)
+sfdir.o:	$(HDRS) scandir.h
+snd.o:		$(HDRS)
+osbind.o:	$(HDRS)
+scandir.o:	$(HDRS) scandir.h

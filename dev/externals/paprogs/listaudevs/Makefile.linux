@@ -1,0 +1,32 @@
+# OSX makefile for listaudevs © Richard Dobson Feb 1 2014
+
+CC = gcc
+OPT = -O3
+#OPT = -g
+# change this path as needed
+PAROOT= ../portaudio
+PADIR = $(PAROOT)/lib/.libs
+PAINC = $(PAROOT)/include
+CFLAGS = $(OPT) -Dlinux -Dunix -I$(PAINC) -L$(PADIR) 
+PROG=listaudevs  
+
+.c.o:
+	$(CC) $(CFLAGS) -c $<
+
+	 
+$(PROG):	devs.o 
+	$(CC) $(CFLAGS) devs.o -o $(PROG) $(PADIR)/libportaudio.a -lm -lasound -ljack -lpthread
+
+clean: 
+	rm  -f devs.o
+veryclean:	clean
+	rm -f $(PROG)
+
+install:	$(PROG)
+	cp $(PROG) ../../../Release
+
+#dependencies
+
+devs.o: $(PAINC)/portaudio.h
+
+

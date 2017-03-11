@@ -1,0 +1,33 @@
+# OSX makefile for listaudevs © Richard Dobson Feb 1 2014
+
+CC = gcc
+OPT = -O3
+#OPT = -g
+# change this path as needed
+PAROOT= ../portaudio
+PADIR = $(PAROOT)/lib/.libs
+PAINC = $(PAROOT)/include
+CFLAGS = $(OPT) -mmacosx-version-min=10.5 -arch i386 -Dunix -DMAC  -DPA_USE_COREAUDIO -I$(PAINC) -L$(PADIR) 
+IOLINK =  -framework CoreAudio -framework AudioToolbox -framework AudioUnit -framework Carbon
+PROG=listaudevs  
+
+.c.o:
+	$(CC) $(CFLAGS) -c $<
+
+	 
+$(PROG):	devs.o 
+	$(CC) $(CFLAGS) devs.o -o $(PROG) $(IOLINK)  -lportaudio
+
+clean: 
+	rm  -f devs.o
+veryclean:	clean
+	rm -f $(PROG)
+
+install:	$(PROG)
+	cp $(PROG) ../../../Release
+
+#dependencies
+
+devs.o: $(PAINC)/portaudio.h
+
+

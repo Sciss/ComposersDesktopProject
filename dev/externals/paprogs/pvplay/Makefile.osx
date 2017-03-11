@@ -1,0 +1,46 @@
+# OSX makefile for pvplay ; analysis file player using Portaudio v 19
+
+CC = gcc
+CPP= g++
+OPT = -O3
+#OPT = -g
+# edit this as necessary to point to your portaudio directory
+PAROOT = ../portaudio
+PACOM = $(PAROOT)/src/common
+PAINC = $(PAROOT)/include
+PALIB = $(PAROOT)/lib/.libs
+SFSYSROOT=../../../..
+SFSYS= $(SFSYSROOT)/lib
+CFLAGS = $(OPT) -mmacosx-version-min=10.5 -arch i386 -Dunix -DMAC -DPA_USE_COREAUDIO  -I$(SFSYSROOT)/include  -I$(PAINC) -I$(PACOM) -L$(PALIB) -L$(SFSYS)
+IOLINK =  -framework CoreAudio -framework AudioToolbox -framework AudioUnit -framework Carbon
+PVCORE = pvoc2.o pvfileio.o mxfft.o
+PROG=pvplay
+
+.c.o:
+	$(CC) $(CFLAGS) -c $<
+.cpp.o:
+	$(CPP) $(CFLAGS) -c $<
+
+all:	$(PROG)
+
+	 
+$(PROG): pvplay.o fmhfuncs.o pvthreads.o $(PVCORE) 
+	$(CPP) $(CFLAGS) pvplay.o fmhfuncs.o pvthreads.o $(PVCORE) -o $(PROG) $(IOLINK) /usr/local/lib/libaaio.a -lsfsys -lportaudio
+
+
+clean:
+	rm  -f *.o
+
+veryclean:	clean
+	rm -f $(PROG)
+
+install:	$(PROG)
+	cp $(PROG) ../../../Release
+    
+# dependencies
+
+pvplay.o:	$(PAINC)/portaudio.h
+
+
+
+

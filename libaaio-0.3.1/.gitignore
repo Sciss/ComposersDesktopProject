@@ -1,0 +1,9 @@
+/man/Makefile*
+Makefile
+*.lo
+*.la
+/config.cache
+/config.log
+/config.status
+/libtool
+/.libs/

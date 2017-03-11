@@ -1,0 +1,82 @@
+#
+#	OSX makefile for CDP Multi-Channel Toolkit, © Richard Dobson Feb 1 2014
+#       see also directory paprogs for recsf and paplay (depend on portaudio)
+#	
+#
+CC=gcc
+CPP=g++
+CDPROOT=../../..
+SFINC=$(CDPROOT)/include
+PSFINC=../include
+PORTSF=../lib
+SFSYS=$(CDPROOT)/lib
+CFLAGS= -Wall -O2  -I$(PSFINC) -I$(SFINC)  -L$(PORTSF) -L$(SFSYS)
+MSLIBS= -lkernel32 -luser32 -lole32 -lwinspool -lodbc32 -lgdi32 -lcomdlg32 -ladvapi32 -lshell32 -loleaut32 -luuid
+PROGS= abfpan.exe abfpan2.exe abfdcode.exe fmdcode.exe channelx.exe chorder.exe chxformat.exe copysfx.exe interlx.exe nmix.exe njoin.exe rmsinfo.exe sfprops.exe
+
+.c.o:
+	$(CC) $(CFLAGS) -c $<
+.cpp.o:
+	$(CPP) $(CFLAGS) -c $<
+#
+#	targets
+#
+	 
+
+all:	$(PROGS) 
+
+abfdcode.exe:  abfdcode.o
+	$(CPP) $(CFLAGS) abfdcode.o -o abfdcode.exe -lportsf -lstdc++
+
+
+interlx.exe:	interlx.o
+	$(CC) $(CFLAGS) interlx.o -o interlx.exe -lportsf
+
+channelx.exe:	channel.o
+	$(CC) $(CFLAGS) channel.o -o channelx.exe -lportsf
+
+abfpan.exe:	abfpan.o
+	$(CPP) $(CFLAGS) abfpan.o -o abfpan.exe -lportsf -lstdc++
+
+abfpan2.exe:	abfpan2.o
+	$(CPP) $(CFLAGS) abfpan2.o -o abfpan2.exe -lportsf -lstdc++
+
+nmix.exe:	nmix.o
+	$(CC) $(CFLAGS) nmix.o -o nmix.exe -lportsf
+
+copysfx.exe: copysf.o
+	$(CC) $(CFLAGS) copysf.o -o copysfx.exe -lportsf
+
+sfprops.exe:	sfprops.o
+	$(CC) $(CFLAGS)  sfprops.o -o sfprops.exe -lsfsys  $(MSLIBS)
+
+njoin.exe:	njoin.o
+	$(CC) $(CFLAGS) njoin.o -o njoin.exe -lportsf
+
+fmdcode.exe:	fmdcode.o fmhfuncs.o
+	$(CC) $(CFLAGS) fmdcode.o fmhfuncs.o  -o fmdcode.exe -lportsf 
+
+chorder.exe:	chorder.o
+	$(CC) $(CFLAGS) chorder.o -o chorder.exe -lportsf
+
+chxformat.exe:	chxformat.o
+	$(CC) $(CFLAGS) chxformat.o -o chxformat.exe -lportsf
+
+rmsinfo.exe:	rmsinfo.o
+	$(CPP) $(CFLAGS) rmsinfo.o -o rmsinfo.exe -lportsf -lstdc++
+
+
+clean:
+	-rm -f *.o
+
+veryclean:	clean
+	rm  -f $(PROGS) 
+
+install:	$(PROGS)
+	cp $(PROGS) ../../Release
+#
+#	dependencies
+#
+
+fmhdcode.c:	fmdcode.h
+fmhfuncs.c:	fmdcode.h

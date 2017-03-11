@@ -1,0 +1,39 @@
+#
+#	OS X makefile for cdparams_other © Richard Dobson, CDP Ltd 2014
+#
+#
+CC=gcc
+CDPROOT=../..
+CFLAGS= -O -Wall -mmacosx-version-min=10.5  -arch i386 -Dunix  -I ../include -I $(CDPROOT)/include
+SFSYS= $(CDPROOT)/lib/libsfsys.a
+CDP2K= $(CDPROOT)/lib/libcdp2k.a
+OBJS = cdparams_other.o
+PROG=cdparams_other
+
+.c.o:
+	$(CC) $(CFLAGS) -c $<
+#
+#	targets
+#
+all:	$(PROG) 
+
+clean:
+	rm -f $(PROG) 
+
+veryclean:	clean
+	rm -f *.o
+
+$(PROG):	$(OBJS)
+	$(CC) $(CFLAGS) $(OBJS) -o $(PROG) $(CDP2K) $(SFSYS) 
+
+install:	$(PROG)
+	cp $(PROG) ../Release
+	
+#
+#	dependencies
+#
+
+cdparams.o:		../include/standalone.h ../include/science.h
+cdparams_other.o:	../include/standalone.h	../include/science.h
+
+

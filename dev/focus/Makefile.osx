@@ -1,0 +1,37 @@
+#
+#	OSX makefile for focus © Richard Dobson, CDP Ltd 2014
+#
+#
+CC=gcc
+CFLAGS= -O2 -Wall -mmacosx-version-min=10.5  -arch i386 -Dunix -I ../include -I ../../include
+SFSYS= ../../lib/libsfsys.a
+CDP2K= ../../lib/libcdp2k.a
+PROG=focus
+BINS= main.o ap_focus.o focus.o
+
+.c.o:
+	$(CC) $(CFLAGS) -c $<
+#
+#	targets
+#
+all:	$(PROG)
+
+
+
+$(PROG):	$(BINS)
+	$(CC) $(CFLAGS) $(BINS) -o $(PROG) $(CDP2K) $(SFSYS)
+
+clean:
+	rm -f $(PROG)
+	
+veryclean:	clean
+	rm -f *.o
+
+install:	$(PROG)
+	cp $(PROG) ../Release
+#
+#	dependencies
+#
+
+
+

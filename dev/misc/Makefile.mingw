@@ -1,0 +1,92 @@
+#
+#	mingw makefile for soundloom server progs © Richard Dobson, CDP Ltd 2014
+#
+
+CC=gcc
+SFSYSROOT=../..
+CDPLIB= $(SFSYSROOT)/lib
+CFLAGS= -O2 -I ../include -I $(SFSYSROOT)/include -L$(CDPLIB)
+MSLIBS= -lkernel32 -luser32 -lole32 -lwinspool -lodbc32 -lgdi32 -lcomdlg32 -ladvapi32 -lshell32 -loleaut32 -luuid
+
+PROGS= brkdur.exe diskspace.exe fixgobo.exe gobo.exe gobosee.exe histconv.exe listdate.exe logdate.exe \
+	maxsamp2.exe paudition.exe pdisplay.exe pmodify.exe progmach.exe stretcha.exe tkusage.exe \
+	tkusage_other.exe vuform.exe
+.c.o:
+	$(CC) $(CFLAGS) -c $<
+#
+#	targets
+#
+# TODO: add timetap!
+
+all:	$(PROGS)
+
+brkdur.exe:	brkdur.o
+	$(CC) $(CFLAGS) brkdur.o -o brkdur.exe  $(MSLIBS)
+
+diskspace.exe:	diskspace.o
+	$(CC) $(CFLAGS) diskspace.o -o diskspace.exe -lsfsys $(MSLIBS)
+
+fixgobo.exe:	fixgobo.o
+	$(CC) $(CFLAGS) fixgobo.o -o fixgobo.exe $(MSLIBS)
+
+gobo.exe:	gobo.o
+	$(CC) $(CFLAGS) gobo.o -o gobo.exe -lsfsys $(MSLIBS)
+
+gobosee.exe:	gobosee.o
+	$(CC) $(CFLAGS) gobosee.o -o gobosee.exe $(MSLIBS)
+
+histconv.exe:	histconv.o
+	$(CC) $(CFLAGS) histconv.o -o histconv.exe $(MSLIBS)
+
+listdate.exe:	listdate.o
+	$(CC) $(CFLAGS) listdate.o -o listdate.exe -lsfsys $(MSLIBS)
+
+logdate.exe:	logdate.o
+	$(CC) $(CFLAGS) logdate.o -o logdate.exe -lsfsys $(MSLIBS)
+
+maxsamp2.exe:	maxsamp2.o
+	$(CC) $(CFLAGS) maxsamp2.o -o maxsamp2.exe -lsfsys $(MSLIBS)
+
+paudition.exe:	paudition.o mxfft.o
+	$(CC) $(CFLAGS) paudition.o mxfft.o -o paudition.exe -lm -lsfsys $(MSLIBS)
+
+pdisplay.exe:	pdisplay.o
+	$(CC) $(CFLAGS) pdisplay.o -o pdisplay.exe -lcdp2k -lsfsys  $(MSLIBS)
+
+pmodify.exe:	pmodify.o
+	$(CC) $(CFLAGS) pmodify.o -o pmodify.exe -lcdp2k -lsfsys  $(MSLIBS)
+
+progmach.exe:	progmach.o
+	$(CC) $(CFLAGS) progmach.o -o progmach.exe -lsfsys $(MSLIBS)
+
+stretcha.exe:	stretcha.o
+	$(CC) $(CFLAGS) stretcha.o -o stretcha.exe -lsfsys $(MSLIBS)
+
+tkusage_other.exe:	tkusage_other.o
+	$(CC) $(CFLAGS) tkusage_other.o -o tkusage_other.exe $(MSLIBS)
+
+tkusage.exe:	tkusage.o
+	$(CC) $(CFLAGS) tkusage.o -o tkusage.exe $(MSLIBS)
+
+vuform.exe:	vuform.o
+	$(CC) $(CFLAGS) vuform.o -o vuform.exe -lm  -lcdp2k -lsfsys $(MSLIBS)
+
+clean:
+	rm -f $(PROGS)
+
+veryclean:	clean
+	rm -f *.o
+
+install:	all
+	cp $(PROGS) ../Release
+
+#
+#	dependencies
+#
+gobo.c:		../include/standalone.h
+gobosee.c:	../include/standalone.h
+tkusagec:	../include/standalone.h
+tkusage_other.c:	../include/standalone.h
+
+
+

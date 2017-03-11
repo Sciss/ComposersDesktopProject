@@ -1,0 +1,44 @@
+How to build CDP programs on OS X
+
+
+1. install/configure dependencies.
+
+(a) libaaio.a.
+
+This is a small utility library which implements keyboard input via "getch" etc.
+(from: http://sourceforge.net/projects/aaio/)
+
+
+unpack libaaio-0.3.1.tar.bz2
+run ./configure; sudo make install
+
+(the CDP makefiles expect libaaio to be in "the usual place", i.e. /usr/local/lib)
+
+
+2. configure and build the portaudio static library (needed for the audio programs paplay, pvplay,recsf, listaudevs)
+
+A portaudio directory is provided, with  some special changes (configure.in) needed for the Windows platform
+in the release7 directory.
+
+DO NOT just run ./configure etc; the build is likely to fail.
+See the file pamacbuild.txt for details.
+Note that all the portuaido test prgrams will also be built.
+
+
+3. Build CDP programs
+
+A "standard" build system has not been developed yet; we will probably use Scons or CMake for later source releases.
+
+The build is managed by a shell script calling individual plain makefiles in each source directory.
+
+in the "dev" directory, run the script ./makeprograms.sh
+
+All programs will be stored in the local Release directory. 
+They can be copied from here into (e.g) the default cdpr7 system directory (in _cdp/_cdprogs,
+where Soundloom will look for them.
+
+See the general CDP installation notes regarding setup for cdpr7, Soundloom, environment variables,etc.
+
+Richard Dobson, Feb 2014.
+
+

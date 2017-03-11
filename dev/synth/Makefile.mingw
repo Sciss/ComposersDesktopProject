@@ -1,0 +1,35 @@
+#
+#	OSX makefile for synth © Richard Dobson, CDP Ltd 2014
+#
+#	M. C. Atkins, November 1993
+#	RWD linux version April 1999
+#
+CC=gcc
+SFSYSROOT=../..
+CDPLIB= $(SFSYSROOT)/lib
+CFLAGS= -O2 -I ../include -I $(SFSYSROOT)/include -L$(CDPLIB)
+MSLIBS= -lkernel32 -luser32 -lole32 -lwinspool -lodbc32 -lgdi32 -lcomdlg32 -ladvapi32 -lshell32 -loleaut32 -luuid
+PROG=synth.exe
+BINS= main.o ap_synthesis.o mxfft.o pvoc_addon.o wave.o
+
+.c.o:
+	$(CC) $(CFLAGS) -c $<
+#
+#	targets
+#
+all:	$(PROG)
+
+$(PROG):	$(BINS)
+	$(CC) $(CFLAGS) $(BINS) -o $(PROG) -lcdp2k -lsfsys $(MSLIBS)
+
+clean:
+	rm -f $(PROG)
+	
+veryclean:	clean
+	rm -f *.o
+
+install:	$(PROG)
+	cp $(PROG) ../Release
+#
+#	dependencies
+#

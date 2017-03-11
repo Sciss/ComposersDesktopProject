@@ -1,0 +1,34 @@
+# Linux makefile for paplay v 3 ; audio file player using Portaudio v 19 © Richard Dobson Feb 1 2014
+# NB this uses the locally built version of portaudio, rather than a system-installed lib
+# and assumes use of both alsa and jack - feel free to adapt as wanted!
+CC = gcc
+CPP= g++
+OPT = -O3
+#OPT = -g
+PAROOT=../portaudio
+PADIR=$(PAROOT)/lib/.libs
+PAINC=-I$(PAROOT)/include -I$(PAROOT)/src/common
+PSFROOT=../..
+PSFINC=$(PSFROOT)/include
+PSFDIR=$(PSFROOT)/lib
+CFLAGS= $(OPT)  -Dlinux -Dunix -I$(PSFINC) $(PAINC) -L$(PSFDIR)  -L$(PADIR) -L$(PSFDIR)
+PROG=paplay
+
+.c.o:
+	$(CC) $(CFLAGS) -c $<
+.cpp.o:
+	$(CPP) $(CFLAGS) -c $<
+	
+all:	$(PROG)
+	 
+$(PROG):	paplay.o fmhfuncs.o 
+	$(CPP) $(CFLAGS) paplay.o fmhfuncs.o -o $(PROG) /usr/local/lib/libaaio.a $(PADIR)/libportaudio.a -ljack -lasound -lm -lportsf -lpthread  -lstdc++ 
+
+clean: 
+	rm -f *.o
+
+veryclean:	clean
+	rm -f $(PROG)
+
+install:	$(PROG)
+	cp $(PROG) ../../../Release 

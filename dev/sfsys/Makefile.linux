@@ -1,0 +1,42 @@
+#
+#	Linux makefile for sfsys (Release 7)  © Richard Dobson, CDP Ltd 2014
+#
+
+CC=gcc
+# add -DVERBOSE to get diagnostic reports to stdout
+# for basic debugging, define DEBUG_MAC
+CDPROOT=../..
+CFLAGS= -O2 -DCDP97 -Dunix -Dlinux -D_X86_  -DFILE_AMB_SUPPORT -I$(CDPROOT)/include -fPIC
+
+HDRS=	$(CDPROOT)/include/sfsys.h $(CDPROOT)/include/osbind.h ./sffuncs.h
+OBJS=	sfsys.o snd.o sfdir.o osbind.o props.o
+
+.c.o:
+	$(CC) $(CFLAGS) -c $<
+#
+#	targets
+#
+all:	libsfsys.a
+
+
+libsfsys.a:	$(OBJS)
+	ar cr libsfsys.a $(OBJS)
+#	libtool -static -o libsfsys.a $(OBJS)
+	ranlib libsfsys.a
+
+clean:
+	rm -f $(OBJS)
+
+veryclean:	clean
+	rm  -f libsfsys.a
+
+install:	libsfsys.a 	
+	cp libsfsys.a ../../lib/libsfsys.a
+
+#
+#	dependencies
+#
+sfsys.o:	$(HDRS)
+sfdir.o:	$(HDRS)
+snd.o:		$(HDRS)
+osbind.o:	$(HDRS)

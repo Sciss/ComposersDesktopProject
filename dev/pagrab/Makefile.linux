@@ -1,0 +1,35 @@
+#
+#	OSX makefile for pagrab © Richard Dobson, CDP Ltd 2014
+#
+#
+
+CC=gcc
+CFLAGS=-O2 -Wall -Dlinux -Dunix -DDEBUG_MAC  -I ../include -I ../../include 
+SFSYS= ../../lib/libsfsys.a
+CDP2K= ../../lib/libcdp2k.a
+PROG=pagrab
+BINS=pagrab.o
+.c.o:
+	$(CC) $(CFLAGS) -c $<
+
+
+all:	$(PROG)
+
+$(PROG):	$(BINS)
+	$(CC) $(CFLAGS) $(BINS) -o $(PROG) -lm $(SFSYS) $(CDP2K) -lm
+
+clean:
+	rm -f $(PROG)
+
+veryclean:	clean
+	rm -f *.o
+
+install:	all
+	cp $(PROG) ../Release
+
+#
+#	dependencies
+#
+
+
+

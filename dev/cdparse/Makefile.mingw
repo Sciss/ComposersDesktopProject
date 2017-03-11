@@ -1,0 +1,39 @@
+#
+#	mingw makefile for cdparse © Richard Dobson, CDP Ltd 2014
+#
+#
+CC=gcc
+
+SFSYSROOT=../..
+CDPLIB= $(SFSYSROOT)/lib
+CFLAGS= -O2 -Wall -DWIN32 -D_WIN32 -DIS_CDPARSE -I ../include -I $(SFSYSROOT)/include -L$(CDPLIB)
+MSLIBS= -lkernel32 -luser32 -lole32 -lwinspool -lodbc32 -lgdi32 -lcomdlg32 -ladvapi32 -lshell32 -loleaut32 -luuid
+PROG=cdparse.exe
+BINS=cdparse.o
+
+.c.o:
+	$(CC) $(CFLAGS) -c $<
+#
+#	targets
+#
+all:	$(PROG)
+
+$(PROG):	$(BINS)
+	$(CC) $(CFLAGS) $(BINS) -o $(PROG) -lcdp2k -lsfsys $(MSLIBS)
+
+clean:
+	rm -f *.o
+	
+veryclean:	clean
+	rm -f $(PROG)
+
+install:	$(PROG)
+	cp $(PROG) ../Release
+
+
+#
+#	dependencies
+#
+
+
+

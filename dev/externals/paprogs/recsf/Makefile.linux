@@ -1,0 +1,44 @@
+# Linux makefile for recsf v 3 ; multi-channel audio file recorder using Portaudio v 19 © Richard Dobson Feb 1 2014
+
+CC = gcc
+OPT = -O3
+#OPT = -g
+PAROOT=../portaudio
+PADIR=$(PAROOT)/lib/.libs
+PAINC= -I$(PAROOT)/include -I$(PAROOT)/src/common
+PSFROOT=../..
+PSFINC=$(PSFROOT)/include
+PSFDIR=$(PSFROOT)/lib
+PALIB=$(PAROOT)/lib
+CFLAGS= $(OPT)  -Dlinux  -Dunix -I$(PSFINC) $(PAINC)  -L$(PSFDIR) -L$(PADIR)
+PROG=recsf  
+
+
+.c.o:
+	$(CC) $(CFLAGS) -c $<
+
+all:	$(PROG)
+# use June 24 update (in .libs) to pa core audio from svn
+
+$(PROG): recsf.o 
+	$(CC) $(CFLAGS) recsf.o -o $(PROG) /usr/local/lib/libaaio.a  $(PADIR)/libportaudio.a -lasound -ljack -lpthread -lm -lportsf -lportaudio
+
+clean: 
+	rm -f *.o
+	
+veryclean:	clean
+	rm -f $(PROG)
+
+install:	$(PROG)
+	cp $(PROG) ../../../Release
+
+# dependencies
+
+recsf.o:	$(PAROOT)/include/portaudio.h
+
+
+
+ 
+
+
+

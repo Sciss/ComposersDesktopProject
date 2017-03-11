@@ -1,0 +1,39 @@
+#
+#	mingw makefile for env © Richard Dobson, CDP Ltd 2014
+#
+#
+
+CC=gcc
+CFLAGS= -O2 -Wall  -I ../include -I ../../include
+SFSYS= ../../lib/libsfsys.a
+CDP2K= ../../lib/libcdp2k.a
+MSLIBS= -lkernel32 -luser32 -lole32 -lwinspool -lodbc32 -lgdi32 -lcomdlg32 -ladvapi32 -lshell32 -loleaut32 -luuid
+PROG=envel.exe
+BINS= main.o ap_envel.o envel.o envfuncs.o envimpos.o envprepro.o \
+	envprocess.o envxtract.o pluck.o
+  
+.c.o:
+	$(CC) $(CFLAGS) -c $<
+#
+#	targets
+#
+
+all:	$(PROG)
+
+$(PROG):	$(BINS)
+	$(CC) $(CFLAGS) $(BINS) -o $(PROG) $(CDP2K) $(SFSYS) $(MSLIBS)
+
+clean:
+	rm -f $(PROG)
+	
+veryclean:	clean
+	rm -f *.o
+
+install:	$(PROG)
+	cp $(PROG) ../Release
+#
+#	dependencies
+#
+
+
+

@@ -1,0 +1,33 @@
+# OSX makefile for paplay v 3 ; audio file player using Portaudio v 19 © Richard Dobson Feb 1 2014
+CC = gcc
+CPP= g++
+OPT = -O3
+#OPT = -g
+PAROOT=../portaudio
+PADIR=$(PAROOT)/lib/.libs
+PAINC=-I$(PAROOT)/include -I$(PAROOT)/src/common
+PSFROOT=../..
+PSFINC=$(PSFROOT)/include
+PSFDIR=$(PSFROOT)/lib
+CFLAGS= $(OPT)  -mmacosx-version-min=10.5 -arch i386  -Dunix -DMAC  -DPA_USE_COREAUDIO -I$(PSFINC) $(PAINC) -L$(PSFDIR)  -L$(PADIR) -L$(PSFDIR)
+IOLINK=  -framework CoreAudio -framework AudioToolbox -framework AudioUnit -framework Carbon
+PROG=paplay
+
+.c.o:
+	$(CC) $(CFLAGS) -c $<
+.cpp.o:
+	$(CPP) $(CFLAGS) -c $<
+	
+all:	$(PROG)
+	 
+$(PROG):	paplay.o fmhfuncs.o 
+	$(CPP) $(CFLAGS) paplay.o fmhfuncs.o -o $(PROG) $(IOLINK) /usr/local/lib/libaaio.a -lportsf -lportaudio -lstdc++
+
+clean: 
+	rm -f *.o
+
+veryclean:	clean
+	rm -f $(PROG)
+
+install:	$(PROG)
+	cp $(PROG) ../../../Release 

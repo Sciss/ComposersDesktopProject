@@ -1,0 +1,168 @@
+#
+#	mingw makefile for standalone programs © Richard Dobson, CDP Ltd 2014
+#
+#
+CC=gcc
+SFSYSROOT=../..
+CDPLIB= $(SFSYSROOT)/lib
+CFLAGS= -O2 -I ../include -I $(SFSYSROOT)/include -L$(CDPLIB)
+MSLIBS= -lkernel32 -luser32 -lole32 -lwinspool -lodbc32 -lgdi32 -lcomdlg32 -ladvapi32 -lshell32 -loleaut32 -luuid
+PROGS= analjoin.exe brktopi.exe constrict.exe envnu.exe features.exe flutter.exe fofex.exe frame.exe freeze.exe gate.exe get_partials.exe \
+grainex.exe hover.exe manysil.exe mchanpan.exe mchanrev.exe mchiter.exe mchshred.exe	mchzig.exe mchstereo.exe mton.exe \
+multimix.exe newmix.exe oneform.exe peak.exe peakfind.exe phase.exe prefix.exe psow.exe ptobrk.exe retime.exe search.exe \
+spacedesign.exe speclean.exe specnu.exe specross.exe strans.exe texmchan.exe topantail2.exe wrappage.exe
+
+.c.o:
+	$(CC) $(CFLAGS) -c $<
+#
+#	targets
+#
+
+all:	$(PROGS)
+
+analjoin.exe:	analjoin.o
+	$(CC) $(CFLAGS) analjoin.o -o analjoin.exe -lm  -lcdp2k -lsfsys $(MSLIBS)
+
+brktopi.exe:	brktopi.o
+	$(CC) $(CFLAGS) brktopi.o -o brktopi.exe -lm  -lcdp2k -lsfsys $(MSLIBS)
+
+constrict.exe:	constrict.o
+	$(CC) $(CFLAGS) constrict.o -o constrict.exe -lm  -lcdp2k -lsfsys $(MSLIBS)
+
+envnu.exe:	envnu.o
+	$(CC) $(CFLAGS) envnu.o -o envnu.exe -lm  -lcdp2k -lsfsys $(MSLIBS)
+
+features.exe:	features.o
+	$(CC) $(CFLAGS) features.o -o features.exe -lm  -lcdp2k -lsfsys $(MSLIBS)
+
+flutter.exe:	flutter.o
+	$(CC) $(CFLAGS) flutter.o -o flutter.exe -lm  -lcdp2k -lsfsys $(MSLIBS)
+
+fofex.exe:	fofex.o
+	$(CC) $(CFLAGS) fofex.o -o fofex.exe -lm  -lcdp2k -lsfsys $(MSLIBS)
+
+frame.exe:	frame.o
+	$(CC) $(CFLAGS) frame.o -o frame.exe -lm  -lcdp2k -lsfsys $(MSLIBS)
+
+freeze.exe:	freeze.o
+	$(CC) $(CFLAGS) freeze.o -o freeze.exe -lm  -lcdp2k -lsfsys $(MSLIBS)
+
+gate.exe:	gate.o
+	$(CC) $(CFLAGS) gate.o -o gate.exe -lm  -lcdp2k -lsfsys $(MSLIBS)
+
+get_partials.exe:	get_partials.o
+	$(CC) $(CFLAGS) get_partials.o -o get_partials.exe -lm  -lcdp2k -lsfsys $(MSLIBS)
+
+grainex.exe:	grainex.o
+	$(CC) $(CFLAGS) grainex.o -o grainex.exe -lm  -lcdp2k -lsfsys $(MSLIBS)
+
+hover.exe:	hover.o
+	$(CC) $(CFLAGS) hover.o -o hover.exe -lm  -lcdp2k -lsfsys $(MSLIBS)
+
+manysil.exe:	manysil.o
+	$(CC) $(CFLAGS) manysil.o -o manysil.exe -lm  -lcdp2k -lsfsys $(MSLIBS)
+
+mchanpan.exe:	mchanpan.o
+	$(CC) $(CFLAGS) mchanpan.o -o mchanpan.exe -lm  -lcdp2k -lsfsys $(MSLIBS)
+
+mchanrev.exe:	mchanrev.o
+	$(CC) $(CFLAGS) mchanrev.o -o mchanrev.exe -lm  -lcdp2k -lsfsys $(MSLIBS)
+
+mchiter.exe:	mchiter.o
+	$(CC) $(CFLAGS) mchiter.o -o mchiter.exe -lm  -lcdp2k -lsfsys $(MSLIBS)
+
+mchshred.exe:	mchshred.o
+	$(CC) $(CFLAGS) mchshred.o -o mchshred.exe -lm  -lcdp2k -lsfsys $(MSLIBS)
+
+mchstereo.exe:	mchstereo.o
+	$(CC) $(CFLAGS) mchstereo.o -o mchstereo.exe -lm  -lcdp2k -lsfsys $(MSLIBS)
+
+mchzig.exe:	mchzig.o
+	$(CC) $(CFLAGS) mchzig.o -o mchzig.exe -lm  -lcdp2k -lsfsys $(MSLIBS)
+
+mton.exe:	mton.o
+	$(CC) $(CFLAGS) mton.o -o mton.exe -lm  -lcdp2k -lsfsys $(MSLIBS)
+
+multimix.exe:	multimix.o
+	$(CC) $(CFLAGS) multimix.o -o multimix.exe -lm  -lcdp2k -lsfsys $(MSLIBS)
+
+newmix.exe:	newmix.o
+	$(CC) $(CFLAGS) newmix.o -o newmix.exe -lm  -lcdp2k -lsfsys $(MSLIBS)
+
+oneform.exe:	oneform.o
+	$(CC) $(CFLAGS) oneform.o -o oneform.exe -lm  -lcdp2k -lsfsys $(MSLIBS)
+
+peak.exe:	sethares.o
+	$(CC) $(CFLAGS) sethares.o -o peak.exe -lm  -lcdp2k -lsfsys $(MSLIBS)
+
+peakfind.exe:	peakfind.o
+	$(CC) $(CFLAGS) peakfind.o -o peakfind.exe -lm  -lcdp2k -lsfsys $(MSLIBS)
+
+phase.exe:	phase.o
+	$(CC) $(CFLAGS) phase.o -o phase.exe -lm  -lcdp2k -lsfsys $(MSLIBS)
+
+prefix.exe:	prefix.o
+	$(CC) $(CFLAGS) prefix.o -o prefix.exe -lm  -lcdp2k -lsfsys $(MSLIBS)
+
+psow.exe:	psow.o
+	$(CC) $(CFLAGS) psow.o -o psow.exe -lm  -lcdp2k -lsfsys $(MSLIBS)
+
+ptobrk.exe:	ptobrk.o
+	$(CC) $(CFLAGS) ptobrk.o -o ptobrk.exe -lm  -lcdp2k -lsfsys $(MSLIBS)
+
+retime.exe:	retime.o
+	$(CC) $(CFLAGS) retime.o -o retime.exe -lm  -lcdp2k -lsfsys $(MSLIBS)
+
+search.exe:	search.o
+	$(CC) $(CFLAGS) search.o -o search.exe -lm  -lcdp2k -lsfsys $(MSLIBS)
+
+spacedesign.exe:	spacedesign.o
+	$(CC) $(CFLAGS) spacedesign.o -o spacedesign.exe -lm  -lcdp2k -lsfsys $(MSLIBS)
+
+speclean.exe:	speclean.o
+	$(CC) $(CFLAGS) speclean.o -o speclean.exe -lm  -lcdp2k -lsfsys $(MSLIBS)
+
+specnu.exe:	specnu.o
+	$(CC) $(CFLAGS) specnu.o -o specnu.exe -lm  -lcdp2k -lsfsys $(MSLIBS)
+
+strans.exe:	strans_multi.o
+	$(CC) $(CFLAGS) strans_multi.o -o strans.exe -lm  -lcdp2k -lsfsys $(MSLIBS)
+
+specross.exe:	specross.o
+	$(CC) $(CFLAGS) specross.o -o specross.exe -lm  -lcdp2k -lsfsys $(MSLIBS)
+
+texperm.o:	../texture/texperm.c
+	$(CC) $(CFLAGS) -c ../texture/texperm.c
+texture1.o:	../texture/texture1.c
+	$(CC) $(CFLAGS) -c ../texture/texture1.c
+texture2.o:	../texture/texture2.c
+	$(CC) $(CFLAGS) -c ../texture/texture2.c
+texture3.o:	../texture/texture3.c
+	$(CC) $(CFLAGS) -c ../texture/texture3.c
+texture4.o:	../texture/texture4.c
+	$(CC) $(CFLAGS) -c ../texture/texture4.c
+
+texmchan.exe:	texmchan.o texprepromch.o texture5mc.o texperm.o texture1.o texture2.o texture3.o texture4.o
+	$(CC) $(CFLAGS) texmchan.o texperm.o texprepromch.o texture1.o texture2.o texture3.o texture4.o texture5mc.o  -o texmchan.exe -lm  -lcdp2k -lsfsys $(MSLIBS)
+
+topantail2.exe:	topantail2.o
+	$(CC) $(CFLAGS) topantail2.o -o topantail2.exe -lm  -lcdp2k -lsfsys $(MSLIBS)
+
+wrappage.exe:	wrappage.o
+	$(CC) $(CFLAGS) wrappage.o -o wrappage.exe -lm  -lcdp2k -lsfsys $(MSLIBS)
+
+clean:
+	rm -f $(PROGS)
+
+veryclean:	clean
+	rm -f *.o
+
+install:	all
+	cp $(PROGS) ../Release
+
+#
+#	dependencies
+#
+
+
+

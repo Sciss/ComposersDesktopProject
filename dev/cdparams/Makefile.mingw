@@ -1,0 +1,39 @@
+#
+#	mingw makefile for cdparams © Richard Dobson, CDP Ltd 2014
+#
+#
+CC=gcc
+CDPROOT=../..
+CDPLIB= $(CDPROOT)/lib
+CFLAGS= -O2 -Wall -DWIN32 -D_WIN32 -I ../include -I $(CDPROOT)/include -L$(CDPLIB)
+MSLIBS= -lkernel32 -luser32 -lole32 -lwinspool -lodbc32 -lgdi32 -lcomdlg32 -ladvapi32 -lshell32 -loleaut32 -luuid
+PROG=cdparams.exe
+OBJS= cdparams.o display.o flagnames.o parnames.o
+
+.c.o:
+	$(CC) $(CFLAGS) -c $<
+#
+#	targets
+#
+all:	$(PROG) cdparams_other
+
+$(PROG):	$(OBJS)
+	$(CC) $(CFLAGS) $(OBJS) -o $(PROG) $(CDP2K) -lcdp2k -lsfsys $(MSLIBS)
+
+clean:
+	rm -f $(PROG)
+
+veryclean:	clean
+	rm -f *.o
+
+install:	$(PROG) 
+	cp $(PROG) ../Release
+	
+#
+#	dependencies
+#
+
+cdparams.o:		../include/standalone.h ../include/science.h
+
+
+

@@ -1,0 +1,38 @@
+#
+#	OSX makefile for cdparams © Richard Dobson, CDP Ltd 2014
+#
+
+CC=gcc
+CDPROOT=../..
+CDPLIB= $(CDPROOT)/lib
+CFLAGS= -O2 -Wall -Dlinux -Dunix  -I ../include -I $(CDPROOT)/include -L$(CDPLIB)
+PROG=cdparams
+OBJS= cdparams.o display.o flagnames.o parnames.o
+
+.c.o:
+	$(CC) $(CFLAGS) -c $<
+#
+#	targets
+#
+all:	$(PROG) cdparams_other
+
+$(PROG):	$(OBJS)
+	$(CC) $(CFLAGS) $(OBJS) -o $(PROG)  -lm -lcdp2k -lsfsys 
+
+clean:
+	rm -f $(PROG)
+
+veryclean:	clean
+	rm -f *.o
+
+install:	$(PROG) 
+	cp $(PROG) ../Release
+	
+#
+#	dependencies
+#
+
+cdparams.o:		../include/standalone.h ../include/science.h
+
+
+

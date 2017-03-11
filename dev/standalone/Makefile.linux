@@ -1,0 +1,169 @@
+#
+#	Linux makefile for standalone programs © Richard Dobson, CDP Ltd 2014
+#	
+
+CC=gcc
+CDPROOT=../..
+CDPLIB=$(CDPROOT)/lib
+CFLAGS= -O2 -Dlinux -Dunix -I ../include -I$(CDPROOT)/include -L$(CDPLIB)
+
+
+PROGS= analjoin brktopi constrict envnu features flutter fofex frame freeze gate get_partials grainex hover manysil mchanpan mchanrev mchiter mchshred \
+	mchzig mchstereo mton multimix newmix oneform peak peakfind phase prefix psow ptobrk retime search spacedesign speclean \
+	specnu specross strans texmchan topantail2 wrappage
+
+
+.c.o:
+	$(CC) $(CFLAGS) -c $<
+#
+#	targets
+#
+
+all:	$(PROGS)
+
+analjoin:	analjoin.o
+	$(CC) $(CFLAGS) analjoin.o -o analjoin -lm  -lcdp2k -lsfsys
+
+brktopi:	brktopi.o
+	$(CC) $(CFLAGS) brktopi.o -o brktopi -lm  -lcdp2k -lsfsys
+
+constrict:	constrict.o
+	$(CC) $(CFLAGS) constrict.o -o constrict -lm  -lcdp2k -lsfsys
+
+envnu:	envnu.o
+	$(CC) $(CFLAGS) envnu.o -o envnu -lm  -lcdp2k -lsfsys
+
+features:	features.o
+	$(CC) $(CFLAGS) features.o -o features -lm  -lcdp2k -lsfsys
+
+flutter:	flutter.o
+	$(CC) $(CFLAGS) flutter.o -o flutter -lm  -lcdp2k -lsfsys
+
+fofex:	fofex.o
+	$(CC) $(CFLAGS) fofex.o -o fofex -lm  -lcdp2k -lsfsys
+
+frame:	frame.o
+	$(CC) $(CFLAGS) frame.o -o frame -lm  -lcdp2k -lsfsys
+
+freeze:	freeze.o
+	$(CC) $(CFLAGS) freeze.o -o freeze -lm  -lcdp2k -lsfsys
+
+gate:	gate.o
+	$(CC) $(CFLAGS) gate.o -o gate -lm  -lcdp2k -lsfsys
+
+get_partials:	get_partials.o
+	$(CC) $(CFLAGS) get_partials.o -o get_partials -lm  -lcdp2k -lsfsys
+
+grainex:	grainex.o
+	$(CC) $(CFLAGS) grainex.o -o grainex -lm  -lcdp2k -lsfsys
+
+hover:	hover.o
+	$(CC) $(CFLAGS) hover.o -o hover -lm  -lcdp2k -lsfsys
+
+manysil:	manysil.o
+	$(CC) $(CFLAGS) manysil.o -o manysil -lm  -lcdp2k -lsfsys
+
+mchanpan:	mchanpan.o
+	$(CC) $(CFLAGS) mchanpan.o -o mchanpan -lm  -lcdp2k -lsfsys
+
+mchanrev:	mchanrev.o
+	$(CC) $(CFLAGS) mchanrev.o -o mchanrev -lm  -lcdp2k -lsfsys
+
+mchiter:	mchiter.o
+	$(CC) $(CFLAGS) mchiter.o -o mchiter -lm  -lcdp2k -lsfsys
+
+mchshred:	mchshred.o
+	$(CC) $(CFLAGS) mchshred.o -o mchshred -lm  -lcdp2k -lsfsys
+
+mchstereo:	mchstereo.o
+	$(CC) $(CFLAGS) mchstereo.o -o mchstereo -lm  -lcdp2k -lsfsys
+
+mchzig:	mchzig.o
+	$(CC) $(CFLAGS) mchzig.o -o mchzig -lm  -lcdp2k -lsfsys
+
+mton:	mton.o
+	$(CC) $(CFLAGS) mton.o -o mton -lm  -lcdp2k -lsfsys
+
+multimix:	multimix.o
+	$(CC) $(CFLAGS) multimix.o -o multimix -lm  -lcdp2k -lsfsys
+
+newmix:	newmix.o
+	$(CC) $(CFLAGS) newmix.o -o newmix -lm  -lcdp2k -lsfsys
+
+oneform:	oneform.o
+	$(CC) $(CFLAGS) oneform.o -o oneform -lm  -lcdp2k -lsfsys
+
+peak:	sethares.o
+	$(CC) $(CFLAGS) sethares.o -o peak -lm  -lcdp2k -lsfsys
+
+peakfind:	peakfind.o
+	$(CC) $(CFLAGS) peakfind.o -o peakfind -lm  -lcdp2k -lsfsys
+
+phase:	phase.o
+	$(CC) $(CFLAGS) phase.o -o phase -lm  -lcdp2k -lsfsys
+
+prefix:	prefix.o
+	$(CC) $(CFLAGS) prefix.o -o prefix -lm  -lcdp2k -lsfsys
+
+psow:	psow.o
+	$(CC) $(CFLAGS) psow.o -o psow -lm  -lcdp2k -lsfsys
+
+ptobrk:	ptobrk.o
+	$(CC) $(CFLAGS) ptobrk.o -o ptobrk -lm  -lcdp2k -lsfsys
+
+retime:	retime.o
+	$(CC) $(CFLAGS) retime.o -o retime -lm  -lcdp2k -lsfsys
+
+search:	search.o
+	$(CC) $(CFLAGS) search.o -o search -lm  -lcdp2k -lsfsys
+
+spacedesign:	spacedesign.o
+	$(CC) $(CFLAGS) spacedesign.o -o spacedesign -lm  -lcdp2k -lsfsys
+
+speclean:	speclean.o
+	$(CC) $(CFLAGS) speclean.o -o speclean -lm  -lcdp2k -lsfsys
+
+specnu:	specnu.o
+	$(CC) $(CFLAGS) specnu.o -o specnu -lm  -lcdp2k -lsfsys
+
+strans:	strans_multi.o
+	$(CC) $(CFLAGS) strans_multi.o -o strans -lm  -lcdp2k -lsfsys
+
+specross:	specross.o
+	$(CC) $(CFLAGS) specross.o -o specross -lm  -lcdp2k -lsfsys
+
+texperm.o:	../texture/texperm.c
+	$(CC) $(CFLAGS) -c ../texture/texperm.c
+texture1.o:	../texture/texture1.c
+	$(CC) $(CFLAGS) -c ../texture/texture1.c
+texture2.o:	../texture/texture2.c
+	$(CC) $(CFLAGS) -c ../texture/texture2.c
+texture3.o:	../texture/texture3.c
+	$(CC) $(CFLAGS) -c ../texture/texture3.c
+texture4.o:	../texture/texture4.c
+	$(CC) $(CFLAGS) -c ../texture/texture4.c
+
+texmchan:	texmchan.o texprepromch.o texture5mc.o texperm.o texture1.o texture2.o texture3.o texture4.o
+	$(CC) $(CFLAGS) texmchan.o texperm.o texprepromch.o texture1.o texture2.o texture3.o texture4.o texture5mc.o  -o texmchan -lm  -lcdp2k -lsfsys
+
+topantail2:	topantail2.o
+	$(CC) $(CFLAGS) topantail2.o -o topantail2 -lm  -lcdp2k -lsfsys
+ 
+wrappage:	wrappage.o
+	$(CC) $(CFLAGS) wrappage.o -o wrappage -lm  -lcdp2k -lsfsys
+
+clean:
+	rm -f $(PROGS)
+
+veryclean:	clean
+	rm -f *.o
+
+install:	all
+	cp $(PROGS) ../Release
+
+#
+#	dependencies
+#
+
+
+

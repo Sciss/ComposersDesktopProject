@@ -1,0 +1,45 @@
+# Linux makefile for pvplay ; analysis file player using Portaudio v 19 © Richard Dobson Feb 1 2014
+# NB this uses the locally built version of portaudio, rather than a system-installed lib
+# and assumes use of both alsa and jack - feel free to adapt as wanted!
+CC = gcc
+CPP= g++
+OPT = -O3
+#OPT = -g
+PAROOT = ../portaudio
+PACOM = $(PAROOT)/src/common
+PAINC = $(PAROOT)/include
+PALIB = $(PAROOT)/lib/.libs
+SFSYSROOT=../../../..
+SFSYS= $(SFSYSROOT)/lib
+CFLAGS = $(OPT) -Dlinux -Dunix -I$(SFSYSROOT)/include  -I$(PAINC) -I$(PACOM) -L$(PALIB) -L$(SFSYS)
+PVCORE = pvoc2.o pvfileio.o mxfft.o
+PROG=pvplay
+
+.c.o:
+	$(CC) $(CFLAGS) -c $<
+.cpp.o:
+	$(CPP) $(CFLAGS) -c $<
+
+all:	$(PROG)
+
+	 
+$(PROG): pvplay.o fmhfuncs.o pvthreads.o $(PVCORE) 
+	$(CPP) $(CFLAGS) pvplay.o fmhfuncs.o pvthreads.o $(PVCORE) -o $(PROG) /usr/local/lib/libaaio.a $(PALIB)/libportaudio.a -ljack -lasound -lpthread -lsfsys
+
+
+clean:
+	rm  -f *.o
+
+veryclean:	clean
+	rm -f $(PROG)
+
+install:	$(PROG)
+	cp $(PROG) ../../../Release
+    
+# dependencies
+
+pvplay.o:	$(PAINC)/portaudio.h
+
+
+
+

@@ -1,0 +1,28 @@
+# mingw Makefile for CDP2K program support library © Richard Dobson, CDP Ltd 2014
+
+
+OBJS=cdparse.o dzsetup.o formantsg.o mainfuncs.o parstruct.o readdata.o readfiles.o \
+special.o tkinput.o tklib1.o tklib3.o validate.o writedata.o
+CC=gcc
+CFLAGS= -O2 -Wall -DWIN32 -D_WIN32 -I ../include -I ../../include
+
+.c.o:
+	$(CC) $(CFLAGS) -c $<
+
+all:	cdp2k
+
+cdparse.o:	../cdparse/cdparse.c
+	$(CC) $(CFLAGS) -c ../cdparse/cdparse.c
+
+cdp2k:	$(OBJS)
+	ar -rcs libcdp2k.a $(OBJS) 
+	ranlib libcdp2k.a
+
+clean:
+	rm -f *.o
+
+veryclean:	clean
+	rm -f libcdp2k.a
+
+install:	cdp2k
+	cp libcdp2k.a ../../lib

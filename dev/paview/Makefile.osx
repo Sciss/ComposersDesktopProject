@@ -1,0 +1,33 @@
+#
+#	OSX makefile for paview © Richard Dobson, CDP Ltd 2014
+#
+#
+CC=gcc
+CFLAGS=-O2 -Wall -mmacosx-version-min=10.5  -arch i386 -Dunix -DDEBUG_MAC  -I ../include -I ../../include 
+SFSYS= ../../lib/libsfsys.a
+CDP2K= ../../lib/libcdp2k.a
+
+.c.o:
+	$(CC) $(CFLAGS) -c $<
+
+all:	paview
+
+paview:	paview.o
+	$(CC) $(CFLAGS) paview.o -o paview -lm $(SFSYS) $(CDP2K)
+
+clean:
+	rm -f *.o
+
+veryclean:	clean
+	rm -f paview
+
+
+install:	all
+	cp paview ../Release
+
+#
+#	dependencies
+#
+
+
+

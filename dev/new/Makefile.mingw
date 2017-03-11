@@ -1,0 +1,140 @@
+#
+#	mingw makefile for new release 7 programs © Richard Dobson, CDP Ltd 2014
+#
+#
+CC=gcc
+SFSYSROOT=../..
+CDPLIB= $(SFSYSROOT)/lib
+CFLAGS= -O2 -I ../include -I $(SFSYSROOT)/include -L$(CDPLIB)
+MSLIBS= -lkernel32 -luser32 -lole32 -lwinspool -lodbc32 -lgdi32 -lcomdlg32 -ladvapi32 -lshell32 -loleaut32 -luuid
+
+
+PROGS= cantor.exe ceracu.exe chanphase.exe sfecho.exe filtrage.exe fracture.exe glisten.exe isolate.exe iterfof.exe \
+iterline.exe iterlinef.exe madrid.exe newdelay.exe newmorph.exe newsynth.exe newtex.exe packet.exe panorama.exe rejoin.exe \
+selfsim.exe shifter.exe shrink.exe silend.exe specgrids.exe specsphinx.exe spectrum.exe spectwin.exe specvu.exe subtract.exe \
+superaccu.exe tangent.exe transit.exe tremolo.exe tunevary.exe
+
+
+.c.o:
+	$(CC) $(CFLAGS) -c $<
+#
+#	targets
+#
+
+all:	$(PROGS)
+
+cantor.exe:	cantor.o
+	$(CC) $(CFLAGS) cantor.o -o cantor.exe -lm  -lcdp2k -lsfsys $(MSLIBS)
+
+ceracu.exe:	ceracu.o
+	$(CC) $(CFLAGS) ceracu.o -o ceracu.exe -lm  -lcdp2k -lsfsys $(MSLIBS)
+
+chanphase.exe:	chanphase.o
+	$(CC) $(CFLAGS) chanphase.o -o chanphase.exe -lm  -lcdp2k -lsfsys $(MSLIBS)
+
+sfecho.exe:	echo.o
+	$(CC) $(CFLAGS) echo.o -o sfecho.exe -lm  -lcdp2k -lsfsys $(MSLIBS)
+
+filtrage.exe:	filtrage.o
+	$(CC) $(CFLAGS) filtrage.o -o filtrage.exe -lm  -lcdp2k -lsfsys $(MSLIBS)
+
+fracture.exe:	fracture.o
+	$(CC) $(CFLAGS) fracture.o -o fracture.exe -lm  -lcdp2k -lsfsys $(MSLIBS)
+
+glisten.exe:	glisten.o
+	$(CC) $(CFLAGS) glisten.o -o glisten.exe -lm  -lcdp2k -lsfsys $(MSLIBS)
+
+isolate.exe:	isolate.o
+	$(CC) $(CFLAGS) isolate.o -o isolate.exe -lm  -lcdp2k -lsfsys $(MSLIBS)
+
+iterfof.exe:	iterfof.o
+	$(CC) $(CFLAGS) iterfof.o -o iterfof.exe -lm   -lcdp2k -lsfsys $(MSLIBS)
+
+iterline.exe:	iterline.o
+	$(CC) $(CFLAGS) iterline.o -o iterline.exe -lm  -lcdp2k -lsfsys $(MSLIBS)
+
+iterlinef.exe:	iterlinef.o
+	$(CC) $(CFLAGS) iterlinef.o -o iterlinef.exe -lm  -lcdp2k -lsfsys $(MSLIBS)
+
+madrid.exe:	madrid.o
+	$(CC) $(CFLAGS) madrid.o -o madrid.exe -lm  -lcdp2k -lsfsys $(MSLIBS)
+
+newdelay.exe:	newdelay.o
+	$(CC) $(CFLAGS) newdelay.o -o newdelay.exe -lm  -lcdp2k -lsfsys $(MSLIBS)
+
+newmorph.exe:	newmorph.o
+	$(CC) $(CFLAGS) newmorph.o -o newmorph.exe -lm  -lcdp2k -lsfsys $(MSLIBS)
+
+newsynth.exe:	synthesis.o
+	$(CC) $(CFLAGS) synthesis.o -o newsynth.exe -lm  -lcdp2k -lsfsys $(MSLIBS)
+
+newtex.exe:	newtex.o
+	$(CC) $(CFLAGS) newtex.o -o newtex.exe -lm  -lcdp2k -lsfsys $(MSLIBS)
+
+packet.exe:	packet.o
+	$(CC) $(CFLAGS) packet.o -o packet.exe -lm  -lcdp2k -lsfsys $(MSLIBS)
+
+panorama.exe:	panorama.o
+	$(CC) $(CFLAGS) panorama.o -o panorama.exe -lm  -lcdp2k -lsfsys $(MSLIBS)
+
+rejoin.exe:	rejoin.o
+	$(CC) $(CFLAGS) rejoin.o -o rejoin.exe -lm  -lcdp2k -lsfsys $(MSLIBS)
+
+selfsim.exe:	selfsim.o
+	$(CC) $(CFLAGS) selfsim.o -o selfsim.exe -lm  -lcdp2k -lsfsys $(MSLIBS)
+
+shifter.exe:	shifter.o
+	$(CC) $(CFLAGS) shifter.o -o shifter.exe -lm  -lcdp2k -lsfsys $(MSLIBS)
+
+shrink.exe:	shrink.o
+	$(CC) $(CFLAGS) shrink.o -o shrink.exe -lm  -lcdp2k -lsfsys $(MSLIBS)
+
+silend.exe:	silend.o
+	$(CC) $(CFLAGS) silend.o -o silend.exe -lm  -lcdp2k -lsfsys $(MSLIBS)
+
+specgrids.exe:	specgrids.o
+	$(CC) $(CFLAGS) specgrids.o -o specgrids.exe -lm  -lcdp2k -lsfsys $(MSLIBS)
+
+specsphinx.exe:	specsphinx.o
+	$(CC) $(CFLAGS) specsphinx.o -o specsphinx.exe -lm  -lcdp2k -lsfsys $(MSLIBS)
+
+spectrum.exe:	spectrum.o
+	$(CC) $(CFLAGS) spectrum.o -o spectrum.exe -lm  -lcdp2k -lsfsys $(MSLIBS)
+
+spectwin.exe:	spectwin.o
+	$(CC) $(CFLAGS) spectwin.o -o spectwin.exe -lm  -lcdp2k -lsfsys $(MSLIBS)
+
+specvu.exe:	specvu.o
+	$(CC) $(CFLAGS) specvu.o -o specvu.exe -lm  -lcdp2k -lsfsys $(MSLIBS)
+
+subtract.exe:	subtract.o
+	$(CC) $(CFLAGS) subtract.o -o subtract.exe -lm  -lcdp2k -lsfsys $(MSLIBS)
+
+superaccu.exe:	superaccu.o
+	$(CC) $(CFLAGS) superaccu.o -o superaccu.exe -lm  -lcdp2k -lsfsys $(MSLIBS)
+
+tangent.exe:	tangent.o
+	$(CC) $(CFLAGS) tangent.o -o tangent.exe -lm  -lcdp2k -lsfsys $(MSLIBS)
+
+transit.exe:	transit.o
+	$(CC) $(CFLAGS) transit.o -o transit.exe -lm  -lcdp2k -lsfsys $(MSLIBS)
+
+tremolo.exe:	tremolo.o
+	$(CC) $(CFLAGS) tremolo.o -o tremolo.exe -lm  -lcdp2k -lsfsys $(MSLIBS)
+
+tunevary.exe:	tunevary.o
+	$(CC) $(CFLAGS) tunevary.o -o tunevary.exe -lm  -lcdp2k -lsfsys $(MSLIBS)
+
+clean:
+	rm -f $(PROGS)
+
+veryclean:	clean
+	rm -f *.o
+
+install:	all
+	cp $(PROGS) ../Release
+
+#
+#	dependencies
+#
+$(PROGS):	../include/standalone.h

@@ -1,0 +1,40 @@
+#
+#	OSX makefile for portsf © Richard Dobson, CDP Ltd 2014
+#
+
+#
+CC=gcc
+#CFLAGS= -Wall -Dunix -DPSF_DEBUG -D_DEBUG -I../include
+CFLAGS=-O2 -Wall -mmacosx-version-min=10.5 -arch i386 -arch x86_64 -Dunix -I../include
+
+PSFOBJS=portsf.o ieee80.o
+
+
+.c.o:
+	$(CC) $(CFLAGS) -c $<
+#
+#	targets
+#
+all:	portsf
+
+clean:
+	-rm -f  $(PSFOBJS)
+
+veryclean:
+	-rm -f  $(PSFOBJS) libportsf.a
+
+portsf:	$(PSFOBJS)
+	libtool -static -o libportsf.a $(PSFOBJS)
+
+
+install:	libportsf.a
+	cp libportsf.a ../lib
+	ranlib ../lib/libportsf.a
+	
+
+#
+#	dependencies
+#
+portsf.o:	../include/portsf.h ieee80.h
+
+

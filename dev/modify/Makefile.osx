@@ -1,0 +1,33 @@
+#
+#	OSX makefile for modify © Richard Dobson, CDP Ltd 2014#
+#
+
+CC=gcc
+SFSYSROOT=../..
+CDPLIB= $(SFSYSROOT)/lib
+CFLAGS= -O2 -Wall -mmacosx-version-min=10.5 -arch i386 -Dunix -I ../include -I $(SFSYSROOT)/include -L$(CDPLIB)
+PROG=modify
+BINS= main.o ap_modify.o brapcon.o delay.o gain.o pan.o \
+	granula1.o radical.o strans.o 
+	
+.c.o:
+	$(CC) $(CFLAGS) -c $<
+#
+#	targets
+#
+all:	$(PROG)
+
+$(PROG):	$(BINS)
+	$(CC) $(CFLAGS) $(BINS) -o $(PROG)  -lsfsys -lcdp2k
+
+clean:
+	rm -f $(PROG)
+	
+veryclean:	clean
+	rm -f *.o
+
+install:	$(PROG)
+	cp $(PROG) ../Release
+#
+#	dependencies
+#

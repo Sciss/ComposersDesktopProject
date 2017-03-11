@@ -1,0 +1,52 @@
+#
+#	mingw makefile for externals/reverb © Richard Dobson, CDP Ltd 2014
+#
+#
+CC=gcc
+CPP=g++
+
+CDPROOT=../..
+SFSYSROOT=$(CDPROOT)/..
+SFDIR=$(SFSYSROOT)/lib
+PSFROOT=..
+PSFLIB=$(PSFROOT)/lib
+MSLIBS= -lkernel32 -luser32 -lole32 -lwinmm -ldsound -lwinspool -lodbc32 -lgdi32 -lcomdlg32 -ladvapi32 -lshell32 -loleaut32 -luuid
+CFLAGS= -O2 -Wall -DWIN32 -D_WIN32 -Dunix -I $(CDPROOT)/include -I $(SFSYSROOT)/include -I$(PSFROOT)/include
+RVOBJS=reverberator.o wavetable.o
+PROGS=rmverb.exe reverb.exe rmresp.exe tapdelay.exe
+  
+.c.o:
+	$(CC) $(CFLAGS) -c $<
+.cpp.o:
+	$(CPP) $(CFLAGS) -c $<
+#
+#	targets
+#
+all:	$(PROGS)
+
+reverb.exe:	reverb.o $(RVOBJS)
+	$(CPP) $(CFLAGS) -L$(SFDIR) reverb.o $(RVOBJS) -o reverb.exe -lsfsys  -lstdc++ $(MSLIBS)
+
+rmverb.exe:	rmverb.o $(RVOBJS)
+	$(CPP) $(CFLAGS) -L$(PSFLIB) rmverb.o  $(RVOBJS) -o rmverb.exe  -lportsf -lstdc++
+
+rmresp.exe:	roomresp.o
+	$(CPP) $(CFLAGS) roomresp.o -o rmresp.exe -lstdc++ 
+
+tapdelay.exe:	$(RVOBJS) tdelaymain.o
+	$(CPP) $(CFLAGS) -L$(SFDIR) $(RVOBJS) tdelaymain.o  -o tapdelay.exe  -lsfsys -lstdc++ $(MSLIBS)
+
+clean:
+	rm -f $(PROGS)
+	
+veryclean:	clean
+	rm -f *.o
+
+install:	$(PROGS)
+	cp $(PROGS) $(CDPROOT)/Release
+#
+#	dependencies
+#
+
+
+

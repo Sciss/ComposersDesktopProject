@@ -1,0 +1,35 @@
+#
+#	OSX makefile for sfedit © Richard Dobson, CDP Ltd 2014
+#
+#
+CC=gcc
+CFLAGS= -O2 -Wall -mmacosx-version-min=10.5 -arch i386 -Dunix -I ../include -I ../../include
+SFSYS= ../../lib/libsfsys.a
+CDP2K= ../../lib/libcdp2k.a
+PROG=sfedit
+BINS= main.o ap_edit.o cut.o twixt.o
+
+.c.o:
+	$(CC) $(CFLAGS) -c $<
+#
+#	targets
+#
+all:	$(PROG)
+
+$(PROG):	$(BINS)
+	$(CC) $(CFLAGS) $(BINS) -o $(PROG) $(CDP2K) $(SFSYS)
+
+clean:
+	rm -f *.o
+	
+veryclean:	clean
+	rm -f $(PROG)
+
+install:	$(PROG)
+	cp $(PROG) ../Release
+#
+#	dependencies
+#
+
+
+

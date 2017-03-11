@@ -1,0 +1,35 @@
+#
+#	mingw makefile for housekeep  © Richard Dobson, CDP Ltd 2014
+#
+
+CC=gcc
+SFSYSROOT=../..
+CDPLIB= $(SFSYSROOT)/lib
+CFLAGS= -O2 -I ../include -I $(SFSYSROOT)/include -L$(CDPLIB)
+MSLIBS= -lkernel32 -luser32 -lole32 -lwinspool -lodbc32 -lgdi32 -lcomdlg32 -ladvapi32 -lshell32 -loleaut32 -luuid
+PROG=housekeep.exe
+BINS= main.o ap_house.o channels.o clean.o dump.o dupl.o respec.o sort.o 
+.c.o:
+	$(CC) $(CFLAGS) -c $<
+#
+#	targets
+#
+all:	$(PROG)
+
+$(PROG):	$(BINS)
+	$(CC) $(CFLAGS) $(BINS) -o $(PROG) -lcdp2k -lsfsys $(MSLIBS)
+
+clean:
+	rm -f $(PROG)
+	
+veryclean:	clean
+	rm -f *.o
+
+install:	$(PROG)
+	cp $(PROG) ../Release
+
+#
+#	dependencies
+#
+
+

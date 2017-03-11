@@ -1,0 +1,32 @@
+#
+#	Linux makefile for pview © Richard Dobson, CDP Ltd 2014
+#
+
+CC=gcc
+CFLAGS=-O -Wall -Dlinux -Dunix -DDEBUG_MAC  -I ../include -I ../../include 
+SFSYS= ../../lib/libsfsys.a
+CDP2K= ../../lib/libcdp2k.a
+PROG = pview
+.c.o:
+	$(CC) $(CFLAGS) -c $<
+
+all:	$(PROG)
+
+$(PROG):	pview.o
+	$(CC) $(CFLAGS) pview.o -o $(PROG) -lm $(SFSYS) $(CDP2K) -lm
+
+clean:
+	rm -f *.o
+
+veryclean:	clean
+	rm -f $(PROG)
+
+install:	all
+	cp $(PROG) ../Release
+
+#
+#	dependencies
+#
+
+
+

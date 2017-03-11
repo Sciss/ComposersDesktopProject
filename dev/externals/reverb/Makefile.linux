@@ -1,0 +1,51 @@
+#
+#	OSX makefile for externals/reverb © Richard Dobson, CDP Ltd 2014
+#
+#
+CC=gcc
+CPP=g++
+
+CDPROOT=../..
+SFSYSROOT=$(CDPROOT)/..
+SFDIR=$(SFSYSROOT)/lib
+PSFROOT=..
+PSFLIB=$(PSFROOT)/lib
+CFLAGS= -O -Wall -Dlinux -Dunix -I $(CDPROOT)/include -I $(SFSYSROOT)/include -I$(PSFROOT)/include 
+RVOBJS=reverberator.o wavetable.o
+PROGS=rmverb reverb rmresp tapdelay
+  
+.c.o:
+	$(CC) $(CFLAGS) -c $<
+.cpp.o:
+	$(CPP) $(CFLAGS) -c $<
+#
+#	targets
+#
+all:	$(PROGS)
+
+reverb:	reverb.o $(RVOBJS)
+	$(CPP) $(CFLAGS) -L$(SFDIR) reverb.o $(RVOBJS) -o reverb -lsfsys -lstdc++ -lm
+
+rmverb:	rmverb.o $(RVOBJS)
+	$(CPP) $(CFLAGS) -L$(PSFLIB) rmverb.o $(RVOBJS) -o rmverb  -lportsf -lstdc++ -lm
+
+rmresp:	roomresp.o
+	$(CPP) $(CFLAGS) roomresp.o -o rmresp -lstdc++ 
+
+tapdelay:	$(RVOBJS) tdelaymain.o
+	$(CPP) $(CFLAGS) -L$(SFDIR) $(RVOBJS) tdelaymain.o  -o tapdelay  -lsfsys -lstdc++ -lm
+
+clean:
+	rm -f $(PROGS)
+	
+veryclean:	clean
+	rm -f *.o
+
+install:	$(PROGS)
+	cp $(PROGS) $(CDPROOT)/Release
+#
+#	dependencies
+#
+
+
+

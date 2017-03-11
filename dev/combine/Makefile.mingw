@@ -1,0 +1,39 @@
+#
+#	mingw makefile for combine © Richard Dobson, CDP Ltd 2014
+#
+#
+
+CC=gcc
+CFLAGS= -O2 -Wall -DWIN32 -D_WIN32 -I ../include -I ../../include
+SFSYS= ../../lib/libsfsys.a
+CDP2K= ../../lib/libcdp2k.a
+MSLIBS= -lkernel32 -luser32 -lole32 -lwinspool -lodbc32 -lgdi32 -lcomdlg32 -ladvapi32 -lshell32 -loleaut32 -luuid
+PROG=combine.exe
+BINS= main.o combine.o ap_combine.o
+ 
+.c.o:
+	$(CC) $(CFLAGS) -c $<
+#
+#	targets
+#
+
+all:	$(PROG)
+
+$(PROG):	$(BINS)
+	$(CC) $(CFLAGS) $(BINS) -o $(PROG) $(CDP2K) $(SFSYS) $(MSLIBS)
+
+install:	$(PROG)
+	cp $(PROG) ../Release
+
+clean:
+	rm -f *.o
+	
+veryclean:	clean
+	rm -f $(PROG)
+
+#
+#	dependencies
+#
+
+
+

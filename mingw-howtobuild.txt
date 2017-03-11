@@ -1,0 +1,32 @@
+How to build CDP programs on Windows.
+
+The MinGW development environment is required (gcc toolset).
+
+
+1. configure and build the portaudio static library (needed for the audio programs paplay, pvplay,recsf, listaudevs)
+
+A portaudio directory is provided, with  some special changes needed for the Windows platform.
+DO NOT just run ./configure etc; the build is likely to fail.
+See the file pamingwbuild.txt for details.
+
+Note that all the portaudio test programs will also be built.
+
+3. Build CDP programs
+
+A "standard" build system has not been developed yet; we will probably use Scons for later source releases.
+
+The build is managed by a shell script calling individual plain makefiles in each source directory.
+Note there are no default "Makefile" files. There are separate Makefiles for MinGW and OSX, selected automatically by the script.
+
+in the "dev" directory, run the script ./makeprograms.sh
+
+All programs will be stored in the local Release directory. There are 151 in all.
+
+They can be copied from here into (e.g) the default cdpr7 system directory (in _cdp/_cdprogs,
+where Soundloom will look for them.
+
+See the general CDP installation notes regarding setup for cdpr7, Soundloom, environment variables,etc.
+
+Richard Dobson, Feb 2014.
+
+

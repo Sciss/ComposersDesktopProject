@@ -1,0 +1,34 @@
+#
+#	Linux makefile for filter © Richard Dobson, CDP Ltd 2014
+#
+#
+CC=gcc
+SFSYSROOT=../..
+CDPLIB= $(SFSYSROOT)/lib
+CFLAGS= -O2 -Wall -Dlinux -Dunix -I ../include -I $(SFSYSROOT)/include -L$(CDPLIB)
+PROG=filter
+BINS= main.o ap_filter.o filters0.o filters1.o fltpcon.o fltprepro.o 
+.c.o:
+	$(CC) $(CFLAGS) -c $<
+#
+#	targets
+#
+all:	$(PROG)
+
+clean:
+	rm -f $(PROG)
+	
+veryclean:	clean
+	rm -f *.o
+
+$(PROG):	$(BINS)
+	$(CC) $(CFLAGS) $(BINS) -o $(PROG) -lcdp2k -lsfsys -lm
+
+install:	$(PROG)
+	cp $(PROG) ../Release/
+#
+#	dependencies
+#
+
+
+

@@ -1,0 +1,40 @@
+#
+#	Linux makefile for portsf © Richard Dobson, CDP Ltd 2014
+#
+
+#
+CC=gcc
+#CFLAGS= -g -Wall -Dlinux -Dunix -DPSF_DEBUG -D_DEBUG -I../include
+CFLAGS=-O2 -Dlinux -Dunix -I../include -fPIC
+
+PSFOBJS=portsf.o ieee80.o
+
+
+.c.o:
+	$(CC) $(CFLAGS) -c $<
+#
+#	targets
+#
+all:	portsf
+
+clean:
+	-rm -f  $(PSFOBJS)
+
+veryclean:
+	-rm -f  $(PSFOBJS) libportsf.a
+
+libportsf.a:	$(PSFOBJS)
+	ar cr -o libportsf.a $(PSFOBJS)
+
+
+install:	libportsf.a
+	cp libportsf.a ../lib
+	ranlib ../lib/libportsf.a
+	
+
+#
+#	dependencies
+#
+portsf.o:	../include/portsf.h ieee80.h
+
+

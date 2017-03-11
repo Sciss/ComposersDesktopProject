@@ -1,0 +1,97 @@
+#
+#	Linux makefile for soundloom server progs © Richard Dobson, CDP Ltd 2014
+#
+#
+CC=gcc
+CFLAGS=-O2 -Wall -Dlinux -Dunix -I ../include -I ../../include
+SFSYS= ../../lib/libsfsys.a
+CDP2K= ../../lib/libcdp2k.a
+
+#TODO: unix version of timetap! (but Soundloom now appears to have its own mechanism for this)
+
+PROGS= brkdur diskspace fixgobo gobo gobosee histconv listdate logdate \
+	maxsamp2 paudition pdisplay pmodify progmach pview stretcha tkusage \
+	tkusage_other vuform
+
+.c.o:
+	$(CC) $(CFLAGS) -c $<
+#
+#	targets
+#
+# TODO: add timetap!
+
+all:	$(PROGS)
+
+brkdur:	brkdur.o
+	$(CC) $(CFLAGS) brkdur.o -o brkdur -lm
+
+diskspace:	diskspace.o
+	$(CC) $(CFLAGS) diskspace.o -o diskspace $(SFSYS) -lm
+
+fixgobo:	fixgobo.o
+	$(CC) $(CFLAGS) fixgobo.o -o fixgobo
+
+gobo:	gobo.o
+	$(CC) $(CFLAGS) gobo.o -o gobo $(SFSYS) -lm
+
+gobosee:	gobosee.o
+	$(CC) $(CFLAGS) gobosee.o -o gobosee
+
+histconv:	histconv.o
+	$(CC) $(CFLAGS) histconv.o -o histconv
+
+listdate:	listdate.o
+	$(CC) $(CFLAGS) listdate.o -o listdate $(SFSYS) -lm
+
+logdate:	logdate.o
+	$(CC) $(CFLAGS) logdate.o -o logdate $(SFSYS) -lm
+
+maxsamp2:	maxsamp2.o
+	$(CC) $(CFLAGS) maxsamp2.o -o maxsamp2 $(SFSYS) -lm
+
+paudition:	paudition.o mxfft.o
+	$(CC) $(CFLAGS) paudition.o mxfft.o -o paudition -lm $(SFSYS)
+
+pdisplay:	pdisplay.o
+	$(CC) $(CFLAGS) pdisplay.o -o pdisplay $(SFSYS) $(CDP2K) -lm
+
+pmodify:	pmodify.o
+	$(CC) $(CFLAGS) pmodify.o -o pmodify $(SFSYS) $(CDP2K) -lm
+
+progmach:	progmach.o
+	$(CC) $(CFLAGS) progmach.o -o progmach $(SFSYS) -lm
+
+pview:		pview_flt.o
+	$(CC) $(CFLAGS) pview_flt.o -o pview $(SFSYS) -lm
+
+stretcha:	stretcha.o
+	$(CC) $(CFLAGS) stretcha.o -o stretcha $(SFSYS) -lm
+
+tkusage_other:	tkusage_other.o
+	$(CC) $(CFLAGS) tkusage_other.o -o tkusage_other
+
+tkusage:	tkusage.o
+	$(CC) $(CFLAGS) tkusage.o -o tkusage
+
+vuform:	vuform.o
+	$(CC) $(CFLAGS) vuform.o -o vuform -lm  $(SFSYS) $(CDP2K) -lm
+
+clean:
+	rm -f $(PROGS)
+
+veryclean:	clean
+	rm -f *.o
+
+install:	all
+	cp $(PROGS) ../Release
+
+#
+#	dependencies
+#
+gobo.c:		../include/standalone.h
+gobosee.c:	../include/standalone.h
+tkusagec:	../include/standalone.h
+tkusage_other.c:	../include/standalone.h
+
+
+

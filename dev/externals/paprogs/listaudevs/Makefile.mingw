@@ -1,0 +1,33 @@
+# mingw makefile for listaudevs © Richard Dobson Feb 1 2014
+
+CC = gcc
+OPT = -O3
+#OPT = -g
+# change this path as needed
+PAROOT= ../portaudio
+PADIR = $(PAROOT)/lib/.libs
+PAINC = $(PAROOT)/include
+MSLIBS= -lkernel32 -luser32 -lole32 -lwinmm -ldsound -lwinspool -lodbc32 -lgdi32 -lcomdlg32 -ladvapi32 -lshell32 -loleaut32 -luuid
+CFLAGS = $(OPT)  -DWIN32 -D_WIN32 -DUSE_ASIO  -I$(PAINC) -L$(PADIR) 
+PROG=listaudevs.exe  
+
+.c.o:
+	$(CC) $(CFLAGS) -c $<
+
+	 
+$(PROG):	devs.o 
+	$(CC) $(CFLAGS) devs.o -o $(PROG) -lportaudio -lstdc++ $(MSLIBS)
+
+clean: 
+	rm  -f devs.o
+veryclean:	clean
+	rm -f $(PROG)
+
+install:	$(PROG)
+	cp $(PROG) ../../../Release
+
+#dependencies
+
+devs.o: $(PAINC)/portaudio.h
+
+

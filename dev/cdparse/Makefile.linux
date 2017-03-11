@@ -1,0 +1,37 @@
+#
+#	OSX makefile for cdparse © Richard Dobson, CDP Ltd 2014
+#
+#
+CC=gcc
+SFSYSROOT=../..
+CDPLIB= $(SFSYSROOT)/lib
+CFLAGS= -O -Wall -Dlinux -Dunix -DIS_CDPARSE -D__MAC__ -I ../include -I $(SFSYSROOT)/include -L$(CDPLIB)
+PROG=cdparse
+BINS=cdparse.o
+
+.c.o:
+	$(CC) $(CFLAGS) -c $<
+#
+#	targets
+#
+all:	$(PROG)
+
+$(PROG):	$(BINS)
+	$(CC) $(CFLAGS) $(BINS) -o $(PROG) -lm -lcdp2k -lsfsys
+
+clean:
+	rm -f *.o
+	
+veryclean:	clean
+	rm -f $(PROG)
+
+install:	$(PROG)
+	cp $(PROG) ../Release
+
+
+#
+#	dependencies
+#
+
+
+

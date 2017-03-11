@@ -1,0 +1,44 @@
+# makefile for paplay ; multichannel soundfile file player using Portaudio v 19
+
+CC = gcc
+CPP= g++
+OPT = -O3
+#OPT = -g
+# edit this as necessary to point to your portaudio directory
+PAROOT=../portaudio
+PADIR=$(PAROOT)/lib/.libs
+PAINC=-I$(PAROOT)/include -I$(PAROOT)/src/common
+PSFROOT=../..
+PSFINC=$(PSFROOT)/include
+PSFDIR=$(PSFROOT)/lib
+MSLIBS= -lkernel32 -luser32 -lole32 -lwinmm -ldsound -lwinspool -lodbc32 -lgdi32 -lcomdlg32 -ladvapi32 -lshell32 -loleaut32 -luuid
+CFLAGS = $(OPT) -DWIN32 -D_WIN32 -DUSE_ASIO -I../include -I$(PSFINC) $(PAINC) -L$(PSFDIR)  -L$(PADIR)
+PROG=paplay.exe
+
+.c.o:
+	$(CC) $(CFLAGS) -c $<
+.cpp.o:
+	$(CPP) $(CFLAGS) -c $<
+
+all:	$(PROG)
+
+	 
+$(PROG): paplay.o fmhfuncs.o
+	$(CPP) $(CFLAGS) paplay.o fmhfuncs.o -o $(PROG) -lportsf -lportaudio $(MSLIBS) -lstdc++
+
+
+clean: 
+	rm  -f *.o
+
+veryclean:	clean
+	rm -f $(PROG)
+
+install:	$(PROG)
+	cp $(PROG) ../../../Release
+
+# dependencies
+
+pvplay.o:   $(PAINC)/portaudio.h
+
+
+

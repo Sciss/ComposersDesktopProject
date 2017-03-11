@@ -1,0 +1,32 @@
+#
+#	Linux makefile for texture © Richard Dobson, CDP Ltd 2014
+#
+
+CC=gcc
+CFLAGS= -O2 -Wall -Dlinux -Dunix -I ../include -I ../../include
+SFSYS= ../../lib/libsfsys.a
+CDP2K= ../../lib/libcdp2k.a
+PROG=texture
+BINS= main.o ap_texture.o texperm.o texture1.o texture2.o texture3.o  \
+	texture4.o texture5.o texprepro.o 
+.c.o:
+	$(CC) $(CFLAGS) -c $<
+#
+#	targets
+#
+all:	$(PROG)
+
+$(PROG):	$(BINS)
+	$(CC) $(CFLAGS) $(BINS) -o $(PROG) $(CDP2K) $(SFSYS) -lm
+
+clean:
+	rm -f $(PROG)
+	
+veryclean:	clean
+	rm -f *.o
+
+install:	$(PROG)
+	cp $(PROG) ../Release
+#
+#	dependencies
+#

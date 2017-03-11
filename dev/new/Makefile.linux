@@ -1,0 +1,139 @@
+#
+#	Linux makefile for new release 7 programs © Richard Dobson, CDP Ltd 2014
+#
+#
+CC=gcc
+CDPROOT=../..
+CDPLIB=$(CDPROOT)/lib
+CFLAGS= -O2 -Dlinux -Dunix -I ../include -I$(CDPROOT)/include -L$(CDPLIB)
+
+PROGS= cantor ceracu chanphase sfecho filtrage fracture glisten isolate iterfof iterline iterlinef \
+madrid newdelay newmorph newsynth newtex packet panorama rejoin selfsim shifter shrink silend \
+specgrids specsphinx spectrum spectwin specvu subtract superaccu tangent transit tremolo tunevary
+
+
+.c.o:
+	$(CC) $(CFLAGS) -c $<
+#
+#	targets
+#
+
+all:	$(PROGS)
+
+cantor:	cantor.o
+	$(CC) $(CFLAGS) cantor.o -o cantor -lm -lcdp2k -lsfsys  
+
+ceracu:	ceracu.o
+	$(CC) $(CFLAGS) ceracu.o -o ceracu -lm  -lcdp2k -lsfsys
+
+chanphase:	chanphase.o
+	$(CC) $(CFLAGS) chanphase.o -o chanphase -lm  -lcdp2k -lsfsys
+
+sfecho:	echo.o
+	$(CC) $(CFLAGS) echo.o -o sfecho -lm  -lcdp2k -lsfsys
+
+filtrage:	filtrage.o
+	$(CC) $(CFLAGS) filtrage.o -o filtrage -lm  -lcdp2k -lsfsys
+
+fracture:	fracture.o
+	$(CC) $(CFLAGS) fracture.o -o fracture -lm /usr/local/lib/libaaio.a -lcdp2k -lsfsys
+
+glisten:	glisten.o
+	$(CC) $(CFLAGS) glisten.o -o glisten -lm  -lcdp2k -lsfsys
+
+isolate:	isolate.o
+	$(CC) $(CFLAGS) isolate.o -o isolate -lm  -lcdp2k -lsfsys
+
+iterfof:	iterfof.o
+	$(CC) $(CFLAGS) iterfof.o -o iterfof -lm /usr/local/lib/libaaio.a  -lcdp2k -lsfsys
+
+iterline:	iterline.o
+	$(CC) $(CFLAGS) iterline.o -o iterline -lm  -lcdp2k -lsfsys
+
+iterlinef:	iterlinef.o
+	$(CC) $(CFLAGS) iterlinef.o -o iterlinef -lm  -lcdp2k -lsfsys
+
+madrid:	madrid.o
+	$(CC) $(CFLAGS) madrid.o -o madrid -lm  -lcdp2k -lsfsys
+
+newdelay:	newdelay.o
+	$(CC) $(CFLAGS) newdelay.o -o newdelay -lm  -lcdp2k -lsfsys
+
+newmorph:	newmorph.o
+	$(CC) $(CFLAGS) newmorph.o -o newmorph -lm  -lcdp2k -lsfsys
+
+newsynth:	synthesis.o
+	$(CC) $(CFLAGS) synthesis.o -o newsynth -lm /usr/local/lib/libaaio.a -lcdp2k -lsfsys
+
+newtex:	newtex.o
+	$(CC) $(CFLAGS) newtex.o -o newtex -lm /usr/local/lib/libaaio.a -lcdp2k -lsfsys
+
+packet:	packet.o
+	$(CC) $(CFLAGS) packet.o -o packet -lm  -lcdp2k -lsfsys
+
+panorama:	panorama.o
+	$(CC) $(CFLAGS) panorama.o -o panorama -lm  -lcdp2k -lsfsys
+
+rejoin:	rejoin.o
+	$(CC) $(CFLAGS) rejoin.o -o rejoin -lm  -lcdp2k -lsfsys
+
+selfsim:	selfsim.o
+	$(CC) $(CFLAGS) selfsim.o -o selfsim -lm  -lcdp2k -lsfsys
+
+shifter:	shifter.o
+	$(CC) $(CFLAGS) shifter.o -o shifter -lm  -lcdp2k -lsfsys
+
+shrink:	shrink.o
+	$(CC) $(CFLAGS) shrink.o -o shrink -lm  -lcdp2k -lsfsys
+
+silend:	silend.o
+	$(CC) $(CFLAGS) silend.o -o silend -lm  -lcdp2k -lsfsys
+
+specgrids:	specgrids.o
+	$(CC) $(CFLAGS) specgrids.o -o specgrids -lm  -lcdp2k -lsfsys
+
+specsphinx:	specsphinx.o
+	$(CC) $(CFLAGS) specsphinx.o -o specsphinx -lm  -lcdp2k -lsfsys
+
+spectrum:	spectrum.o
+	$(CC) $(CFLAGS) spectrum.o -o spectrum -lm  -lcdp2k -lsfsys
+
+spectwin:	spectwin.o
+	$(CC) $(CFLAGS) spectwin.o -o spectwin -lm  -lcdp2k -lsfsys
+
+specvu:	specvu.o
+	$(CC) $(CFLAGS) specvu.o -o specvu -lm  -lcdp2k -lsfsys
+
+subtract:	subtract.o
+	$(CC) $(CFLAGS) subtract.o -o subtract -lm  -lcdp2k -lsfsys
+
+superaccu:	superaccu.o
+	$(CC) $(CFLAGS) superaccu.o -o superaccu -lm  -lcdp2k -lsfsys
+
+tangent:	tangent.o
+	$(CC) $(CFLAGS) tangent.o -o tangent -lm  -lcdp2k -lsfsys
+
+transit:	transit.o
+	$(CC) $(CFLAGS) transit.o -o transit -lm  -lcdp2k -lsfsys
+
+tremolo:	tremolo.o
+	$(CC) $(CFLAGS) tremolo.o -o tremolo -lm  -lcdp2k -lsfsys
+
+tunevary:	tunevary.o
+	$(CC) $(CFLAGS) tunevary.o -o tunevary -lm  -lcdp2k -lsfsys
+
+clean:
+	rm -f $(PROGS)
+
+veryclean:	clean
+	rm -f *.o
+
+install:	all
+	cp $(PROGS) ../Release
+
+#
+#	dependencies
+#
+$(PROGS): ../include/standalone.h
+
+

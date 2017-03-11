@@ -1,0 +1,33 @@
+#
+#	mingw makefile for pview © Richard Dobson, CDP Ltd 2014
+#
+
+CC=gcc
+SFSYSROOT=../..
+CDPLIB= $(SFSYSROOT)/lib
+CFLAGS= -O2 -I ../include -I $(SFSYSROOT)/include -L$(CDPLIB)
+MSLIBS= -lkernel32 -luser32 -lole32 -lwinspool -lodbc32 -lgdi32 -lcomdlg32 -ladvapi32 -lshell32 -loleaut32 -luuid
+PROG = pview.exe
+.c.o:
+	$(CC) $(CFLAGS) -c $<
+
+all:	$(PROG)
+
+$(PROG):	pview.o
+	$(CC) $(CFLAGS) pview.o -o $(PROG) -lm -lcdp2k -lsfsys $(MSLIBS)
+
+clean:
+	rm -f *.o
+
+veryclean:	clean
+	rm -f $(PROG)
+
+install:	all
+	cp $(PROG) ../Release
+
+#
+#	dependencies
+#
+
+
+

@@ -1,0 +1,35 @@
+#
+#	OSX makefile for dirsf © Richard Dobson, CDP Ltd 2014
+#
+
+CC=gcc
+CDPROOT=../..
+CDPLIB= $(CDPROOT)/lib
+SFINC=../sfsys
+CFLAGS= -O2 -Wall -mmacosx-version-min=10.5 -arch i386  -DCDP97 -Dunix  -I $(SFINC) -I $(CDPROOT)/include -L $(CDPLIB)
+PROG= dirsf
+OBJS=	dirsf.o wildcard.o
+
+.c.o:
+	$(CC) $(CFLAGS) -c $<
+#
+#	targets
+#
+all:	$(PROG)
+
+$(PROG):	dirsf.o wildcard.o
+	$(CC)  $(CFLAGS)  dirsf.o wildcard.o -o $(PROG)  -lsfsys
+
+clean:
+	-rm -f $(OBJS)
+
+veryclean:	clean
+	-rm -f $(PROG)
+
+install:	$(PROG)
+	cp $(PROG) ../Release
+
+#
+#	dependencies
+#
+

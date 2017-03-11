@@ -1,0 +1,39 @@
+#
+#	OSX makefile for fastconv © Richard Dobson, CDP Ltd 2014
+#
+
+CC=gcc
+CPP=g++
+PSFROOT = ..
+PSFINC = $(PSFROOT)/include
+PSFLIB = $(PSFROOT)/lib
+OBJS= fconv.o genrespframe2.o mxfftd.o
+CFLAGS = -O3 -Wall -mmacosx-version-min=10.5  -arch i386 -Dunix -fomit-frame-pointer  -funroll-loops -I$(PSFINC)  -L$(PSFLIB) 
+PROG=fastconv
+
+.c.o:
+	$(CC) $(CFLAGS) -c $<
+.cpp.o:
+	$(CPP) $(CFLAGS) -c $<
+
+all:	$(PROG)
+
+$(PROG):	$(OBJS)
+#	$(CPP) $(CFLAGS) -o $(PROG) $(OBJS)  -lportsf -lm /usr/lib/libstdc++-static.a
+	$(CPP) $(CFLAGS) -o $(PROG) $(OBJS)  -lportsf -lm -lstdc++
+
+clean:
+	rm -f $(OBJS)
+
+veryclean:	clean
+	rm -f $(PROG)
+
+install:	$(PROG)
+	cp $(PROG) ../../Release
+
+#
+#	dependencies
+#
+
+
+

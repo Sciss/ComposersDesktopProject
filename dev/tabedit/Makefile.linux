@@ -1,0 +1,44 @@
+#
+#	Linux makefile for tabedit © Richard Dobson, CDP Ltd 2014
+#
+
+CC=gcc
+CFLAGS= -O2 -Wall -Dlinux -Dunix -I ../include -I ../../include
+SFSYS= ../../lib/libsfsys.a
+CDP2K= ../../lib/libcdp2k.a
+COLS= columns0.o columns1.o columns2.o columns3.o columns4.o columns5.o columns6.o
+PROGS=columns vectors getcol putcol
+
+.c.o:
+	$(CC) $(CFLAGS) -c $<
+#
+#	targets
+#
+all:	$(PROGS)
+
+columns:	$(COLS)
+	$(CC) $(CFLAGS) $(COLS) -o columns $(SFSYS) -lm
+
+vectors:	vectors.o
+	$(CC) $(CFLAGS) vectors.o -o vectors $(SFSYS) -lm
+
+putcol:	putcol.o
+	$(CC) $(CFLAGS) putcol.o -o putcol
+
+getcol:	getcol.o
+	$(CC) $(CFLAGS) getcol.o -o getcol
+
+clean:
+	rm -f $(PROGS)
+	
+veryclean:	clean	
+	rm -f *.o
+	
+install:	all
+	cp $(PROGS) ../Release
+#
+#	dependencies
+#
+
+
+

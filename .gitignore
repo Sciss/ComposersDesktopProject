@@ -1,0 +1,4 @@
+/dev/Release/
+/dev/misc/brkdur
+*.a
+*.o

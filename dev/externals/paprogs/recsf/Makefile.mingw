@@ -1,0 +1,43 @@
+# mingw makefile for recsf v 3 ; multi-channel audio file recorder using Portaudio v 19 © Richard Dobson Feb 1 2014
+
+CC = gcc
+CPP= g++
+OPT = -O3
+#OPT = -g
+# edit this as necessary to point to your portaudio directory
+PAROOT=../portaudio
+PADIR=$(PAROOT)/lib/.libs
+PAINC= -I$(PAROOT)/include -I$(PAROOT)/src/common
+PSFROOT=../..
+PSFINC=$(PSFROOT)/include
+PSFDIR=$(PSFROOT)/lib
+PALIB=$(PAROOT)/lib
+MSLIBS= -lkernel32 -luser32 -lole32 -lwinmm -ldsound -lwinspool -lodbc32 -lgdi32 -lcomdlg32 -ladvapi32 -lshell32 -loleaut32 -luuid
+CFLAGS = $(OPT) -DWIN32 -D_WIN32 -DUSE_ASIO -I$(PSFINC) $(PAINC) -L$(PSFDIR) -L$(PADIR)
+PROG=recsf.exe
+
+.c.o:
+	$(CC) $(CFLAGS) -c $<
+.cpp.o:
+	$(CPP) $(CFLAGS) -c $<
+
+all:	$(PROG)
+ 
+$(PROG): recsf.o 
+	$(CC) $(CFLAGS) recsf.o -o $(PROG) -lportsf -lportaudio $(MSLIBS) -lstdc++
+
+clean: 
+	rm  -f *.o
+
+veryclean:	clean
+	rm -f $(PROG)
+
+install:	$(PROG)
+	cp $(PROG) ../../../Release
+
+# dependencies
+
+recsf.o:	$(PAROOT)/include/portaudio.h
+
+
+

@@ -1,0 +1,35 @@
+#
+#	mingw makefile for filter © Richard Dobson, CDP Ltd 2014
+#
+#
+CC=gcc
+SFSYSROOT=../..
+CDPLIB= $(SFSYSROOT)/lib
+CFLAGS= -O2 -I ../include -I $(SFSYSROOT)/include -L$(CDPLIB)
+MSLIBS= -lkernel32 -luser32 -lole32 -lwinspool -lodbc32 -lgdi32 -lcomdlg32 -ladvapi32 -lshell32 -loleaut32 -luuid
+PROG=filter.exe
+BINS= main.o ap_filter.o filters0.o filters1.o fltpcon.o fltprepro.o 
+.c.o:
+	$(CC) $(CFLAGS) -c $<
+#
+#	targets
+#
+all:	$(PROG)
+
+clean:
+	rm -f $(PROG)
+	
+veryclean:	clean
+	rm -f *.o
+
+$(PROG):	$(BINS)
+	$(CC) $(CFLAGS) $(BINS) -o $(PROG) -lcdp2k -lsfsys $(MSLIBS)
+
+install:	$(PROG)
+	cp $(PROG) ../Release/
+#
+#	dependencies
+#
+
+
+

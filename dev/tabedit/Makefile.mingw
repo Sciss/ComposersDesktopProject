@@ -1,0 +1,45 @@
+#
+#	mingw makefile for tabedit © Richard Dobson, CDP Ltd 2014
+#
+#	M. C. Atkins, November 1993
+#	RWD linux version April 1999
+#
+CC=gcc
+SFSYSROOT=../..
+CDPLIB= $(SFSYSROOT)/lib
+CFLAGS= -O2 -I ../include -I $(SFSYSROOT)/include -L$(CDPLIB)
+MSLIBS= -lkernel32 -luser32 -lole32 -lwinspool -lodbc32 -lgdi32 -lcomdlg32 -ladvapi32 -lshell32 -loleaut32 -luuid
+COLS= columns0.o columns1.o columns2.o columns3.o columns4.o columns5.o columns6.o
+PROGS=columns.exe vectors.exe getcol.exe putcol.exe
+
+.c.o:
+	$(CC) $(CFLAGS) -c $<
+#
+#	targets
+#
+all:	$(PROGS)
+
+columns.exe:	$(COLS)
+	$(CC) $(CFLAGS) $(COLS) -o columns.exe -lsfsys $(MSLIBS)
+
+vectors.exe:	vectors.o
+	$(CC) $(CFLAGS) vectors.o -o vectors.exe -lsfsys $(MSLIBS)
+
+putcol.exe:	putcol.o
+	$(CC) $(CFLAGS) putcol.o -o putcol.exe $(MSLIBS)
+
+getcol.exe:	getcol.o
+	$(CC) $(CFLAGS) getcol.o -o getcol.exe $(MSLIBS)
+
+clean:
+	rm -f $(PROGS)
+	
+veryclean:	clean	
+	rm -f *.o
+
+install:	all
+	cp $(PROGS) ../Release
+
+#
+#	dependencies
+#

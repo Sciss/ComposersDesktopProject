@@ -1,0 +1,38 @@
+#
+#	OSX makefile for combine © Richard Dobson, CDP Ltd 2014
+#
+#
+
+CC=gcc
+CFLAGS= -O -Wall -Dlinux -Dunix -I ../include -I ../../include
+SFSYS= ../../lib/libsfsys.a
+CDP2K= ../../lib/libcdp2k.a
+PROG=combine
+BINS= main.o combine.o ap_combine.o
+ 
+.c.o:
+	$(CC) $(CFLAGS) -c $<
+#
+#	targets
+#
+
+all:	$(PROG)
+
+$(PROG):	$(BINS)
+	$(CC) $(CFLAGS) $(BINS) -o $(PROG) $(CDP2K) $(SFSYS) -lm
+
+install:	$(PROG)
+	cp $(PROG) ../Release
+
+clean:
+	rm -f *.o
+	
+veryclean:	clean
+	rm -f $(PROG)
+
+#
+#	dependencies
+#
+
+
+

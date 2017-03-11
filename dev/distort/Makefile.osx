@@ -1,0 +1,37 @@
+#
+#	OSX makefile for distort © Richard Dobson, CDP Ltd 2014
+#
+#
+CC=gcc
+CFLAGS= -O -Wall -mmacosx-version-min=10.5 -arch i386 -Dunix -I ../include -I ../../include
+SFSYS= ../../lib/libsfsys.a
+CDP2K= ../../lib/libcdp2k.a
+PROG=distort
+BINS= ap_distort.o disprepro.o distdel.o distflt.o distintlv.o distort.o distorta.o \
+	distorte.o distortf.o distorth.o distortion.o distortm.o distorto.o distortp.o \
+	distortr.o distorts.o distresize.o distrpl.o distrpt.o disttel.o main.o pulse.o
+
+.c.o:
+	$(CC) $(CFLAGS) -c $<
+#
+#	targets
+#
+all:	$(PROG)
+
+$(PROG):	$(BINS)
+	$(CC) $(CFLAGS) $(BINS) -o $(PROG) $(CDP2K) $(SFSYS)
+
+clean:
+	rm -f *.o
+	
+veryclean:	clean
+	rm -f $(PROG)
+
+install:	$(PROG)
+	cp $(PROG) ../Release
+#
+#	dependencies
+#
+
+
+

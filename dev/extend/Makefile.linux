@@ -1,0 +1,35 @@
+#
+#	Linux makefile for extend © Richard Dobson, CDP Ltd 2014
+#
+#
+CC=gcc
+CFLAGS= -O2 -Wall -Dlinux -Dunix -I ../include -I ../../include
+SFSYS= ../../lib/libsfsys.a
+CDP2K= ../../lib/libcdp2k.a
+PROG=extend
+BINS= main.o ap_extend.o drunk.o extprepro.o iterate.o zigzag.o  
+
+.c.o:
+	$(CC) $(CFLAGS) -c $<
+#
+#	targets
+#
+all:	$(PROG)
+
+$(PROG):	$(BINS)
+	$(CC) $(CFLAGS) $(BINS) -o $(PROG) $(CDP2K) $(SFSYS) -lm
+
+clean:
+	rm -f $(PROG)
+	
+veryclean:	clean
+	rm -f *.o	
+
+install:	$(PROG)
+	cp $(PROG) ../Release
+#
+#	dependencies
+#
+
+
+
