@@ -127,4 +127,7 @@
 /tabedit/putcol
 /tabedit/vectors
 /texture/texture
-
+/externals/fastconv/fastconv
+/externals/reverb/reverb
+/externals/reverb/rmresp
+/externals/reverb/rmverb

@@ -45,4 +45,18 @@ This goes for the three librarys `libcdp2k`, `libsfsys`, and the included portau
 In order to make the build work, I added `-fPIC` to the `Makefile.linux` files of the three libraries. I don't know if this has implications for compiling on other platforms.
 If adding the flag breaks something for you, you might want to remove this flag again. Note that `veryclean.sh` does not delete the libraries. You have to clean them
 manually, like `cd dev/cdp2k; make veryclean -f Makefile.linux`.
-	
+
+I am still having problems compling the following programs, due to portaudio library problem (missing `-fPIC` still):
+
+- listaudevs
+- paplay
+- pvplay
+- recsf
+
+And the following programs, due to a problem wit tdelaymain and STL macros:
+
+- reverb
+- rmresp
+- rmverb
+- tapdelay
+
